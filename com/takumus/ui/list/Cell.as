@@ -1,4 +1,4 @@
-package list
+package com.takumus.ui.list
 {
 	import flash.display.Sprite;
 

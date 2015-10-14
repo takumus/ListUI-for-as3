@@ -1,4 +1,4 @@
-package list
+package com.takumus.ui.list
 {
 	public class CellData{
 		public var id:int;

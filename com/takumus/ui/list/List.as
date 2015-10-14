@@ -1,4 +1,4 @@
-package list
+package com.takumus.ui.list
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -17,7 +17,7 @@ package list
 		private var _mode:String;
 		private var _mouseY:Number;
 		
-		private var _sortCell:MyCell;
+		private var _sortCell:SampleCell;
 		private var _sortInsertId:int = 0;
 		
 		private var CellClass:Class;

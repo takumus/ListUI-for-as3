@@ -4,17 +4,17 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	
-	import list.List;
+	import com.takumus.ui.list.List;
 	
 	[SWF(frameRate="60")]
-	public class ListUI extends Sprite
+	public class Sample extends Sprite
 	{
 		private var _list:List;
-		public function ListUI()
+		public function Sample()
 		{
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
-			_list = new List(MyCell);
+			_list = new List(SampleCell);
 			_list.y = 100;
 			addChild(_list);
 		}

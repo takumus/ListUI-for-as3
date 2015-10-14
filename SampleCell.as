@@ -3,13 +3,13 @@ package
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
-	import list.CellData;
-	import list.List;
-	import list.SortableCell;
+	import com.takumus.ui.list.CellData;
+	import com.takumus.ui.list.List;
+	import com.takumus.ui.list.SortableCell;
 
-	public class MyCell extends SortableCell{
+	public class SampleCell extends SortableCell{
 		private var _label:TextField;
-		public function MyCell(list:List):void
+		public function SampleCell(list:List):void
 		{
 			super(list);
 			_label = new TextField();
