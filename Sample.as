@@ -14,7 +14,8 @@ package
 		{
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
-			_list = new List(SampleCell);
+			_list = new List(SampleCell, 60);
+			_list.resize(100,300);
 			_list.y = 100;
 			addChild(_list);
 		}

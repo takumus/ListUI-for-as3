@@ -6,9 +6,11 @@ package com.takumus.ui.list
 	
 	public class List extends Sprite
 	{
-		private var _height:Number;
+		private var _width:Number = 100, _height:Number = 100;
+		
 		private var _data:Vector.<CellData>;
 		private var _cell:Vector.<SortableCell>;
+		private var _cellListSize:int;
 		private var _cellHeight:Number = 60;
 		
 		private var _topY:Number = 0;
@@ -17,39 +19,57 @@ package com.takumus.ui.list
 		private var _mode:String;
 		private var _mouseY:Number;
 		
-		private var _sortCell:SampleCell;
+		private var _cellForSort:SampleCell;
 		private var _sortInsertId:int = 0;
 		
 		private var CellClass:Class;
-		public function List(CellClass:Class)
+		public function List(CellClass:Class, cellHeight:Number)
 		{
 			super();
 			
 			this.CellClass = CellClass;
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
-			_height = 800;
-			this.graphics.lineStyle(1, 0xFF0000);
-			this.graphics.drawRect(0, 0, 500, _height);
 			
 			_data = new Vector.<CellData>();
 			_cell = new Vector.<SortableCell>();
-			for(var i:int = 0; i < _height / _cellHeight + 1; i ++){
-				var cell:SortableCell = new CellClass(this);
-				_cell.push(cell);
-				addChild(cell);
-				cell._resize(300, _cellHeight);
-			}
-			_sortCell = new CellClass(this);
-			_sortCell._resize(300, _cellHeight);
-			_sortCell.visible = false;
-			addChild(_sortCell);
+			
+			_cellHeight = cellHeight;
+			
+			_cellForSort = new CellClass(this);
+			_cellForSort.visible = false;
+			addChild(_cellForSort);
+			
 			for(var i:int = 0; i < 100; i ++){
 				var cd:CellData = new CellData();
 				cd.data = "データ"+i;
 				cd.id = i;
 				_data.push(cd);
 			}
+		}
+		public function resize(width:Number, height:Number):void
+		{
+			_width = width;
+			_height = height;
+			
+			//前のセル数
+			var prevCellListSize:int = _cellListSize;
+			//今のセル数
+			_cellListSize = _height / _cellHeight + 1;
+			
+			//画面を覆うだけのcellを準備
+			for(var i:int = 0; i < _cellListSize; i ++){
+				//もともとあったらスキップ
+				if(i < prevCellListSize) continue;
+				//無かったら作成
+				var cell:SortableCell = new CellClass(this);
+				_cell.push(cell);
+				addChild(cell);
+				cell._resize(_width, _cellHeight);
+			}
+			//ソート用のセルをリサイズ
+			_cellForSort._resize(_width, _cellHeight);
+			
 		}
 		private function mouseMove(event:MouseEvent):void
 		{
@@ -72,7 +92,7 @@ package com.takumus.ui.list
 			if(_mode == "scroll"){
 				
 			}else if(_mode == "sort"){
-				_sortCell.y = mouseY - _cellHeight * 0.5;
+				_cellForSort.y = mouseY - _cellHeight * 0.5;
 			}
 			
 			var tmpTopId:int = -_topY / _cellHeight;
@@ -80,7 +100,7 @@ package com.takumus.ui.list
 			_topId = tmpTopId;
 			optimizeCells(topIdV);
 			
-			var scY:Number = _sortCell.y;
+			var scY:Number = _cellForSort.y;
 			_sortInsertId = -1;
 			for(var i:int = 0; i < _cell.length; i ++){
 				var id:int = i + _topId;
@@ -119,10 +139,10 @@ package com.takumus.ui.list
 		private function startSort(dataId:int, cellId:int):void
 		{
 			_mode = "sort";
-			_sortCell._setData(_data.removeAt(dataId));
+			_cellForSort._setData(_data.removeAt(dataId));
 			updateCellDataId();
-			_sortCell.visible = true;
-			_sortCell.y = mouseY;
+			_cellForSort.visible = true;
+			_cellForSort.y = mouseY;
 			
 			for(var i:int = cellId; i < _cell.length; i ++){
 				_cell[i]._setSortPosition(true, false);
@@ -131,14 +151,14 @@ package com.takumus.ui.list
 		}
 		private function stopSort():void
 		{
-			_data.insertAt(_sortInsertId, _sortCell.data);
+			_data.insertAt(_sortInsertId, _cellForSort.data);
 			for(var i:int = 0; i < _cell.length; i ++){
 				_cell[i]._setSortPosition(false, false);
 			}
 			for(var i:int = 0; i < _data.length; i ++){
 				_data[i].id = i;
 			}
-			_sortCell.visible = false;
+			_cellForSort.visible = false;
 			stop();
 		}
 		//----------------------------------------------------------//
