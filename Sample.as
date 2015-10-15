@@ -1,10 +1,11 @@
 package
 {
+	import com.takumus.ui.list.List;
+	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
-	
-	import com.takumus.ui.list.List;
+	import flash.events.Event;
 	
 	[SWF(frameRate="60")]
 	public class Sample extends Sprite
@@ -15,9 +16,13 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			_list = new List(SampleCell, 60);
-			_list.resize(100,300);
-			_list.y = 100;
 			addChild(_list);
+			
+			this.stage.addEventListener(Event.RESIZE, function(e:Event):void
+			{
+				_list.resize(stage.stageWidth, stage.stageHeight / 2);
+				_list.y = stage.stageHeight / 4;
+			});
 		}
 	}
 }
