@@ -11,11 +11,16 @@ package com.takumus.ui.list
 		{
 			super(list);
 		}
-		internal function setSortPosition(isLower:Boolean, animate:Boolean = false):void
+		protected final function sortStart():void
+		{
+			if(useForSort) return;
+			_list._cell_startSort(data.id, cellId);
+		}
+		internal function _setSortPosition(isLower:Boolean, animate:Boolean = false):void
 		{
 			if(_sortLower == isLower) return;
 			_sortLower = isLower;
-			var y:Number = _sortLower?this.height:0;
+			var y:Number = _sortLower?cellHeight:0;
 			if(!animate){
 				contents.y = y;
 				return;
@@ -23,11 +28,6 @@ package com.takumus.ui.list
 			if(_sortOffsetYTween) _sortOffsetYTween.stop();
 			_sortOffsetYTween = Tween24.tween(contents, 0.1).y(y);
 			_sortOffsetYTween.play();
-		}
-		protected function sortStart():void
-		{
-			if(useForSort) return;
-			_list._cell_startSort(cellData.id, cellId);
 		}
 	}
 }

@@ -27,6 +27,13 @@ package
 				}
 			});
 		}
+		protected override function resize(width:Number, height:Number):void
+		{
+			contents.graphics.clear();
+			contents.graphics.lineStyle(1,0xCCCCCC);
+			contents.graphics.beginFill(0xFFFFFF);
+			contents.graphics.drawRect(0,0,width, height);
+		}
 		protected override function setData(data:CellData):void
 		{
 			_label.text = data.data.toString();

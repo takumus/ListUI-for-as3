@@ -38,15 +38,15 @@ package com.takumus.ui.list
 				var cell:SortableCell = new CellClass(this);
 				_cell.push(cell);
 				addChild(cell);
-				cell.render(300, _cellHeight);
+				cell._resize(300, _cellHeight);
 			}
 			_sortCell = new CellClass(this);
-			_sortCell.render(300, _cellHeight);
+			_sortCell._resize(300, _cellHeight);
 			_sortCell.visible = false;
 			addChild(_sortCell);
 			for(var i:int = 0; i < 100; i ++){
 				var cd:CellData = new CellData();
-				cd.data = "@"+i;
+				cd.data = "データ"+i;
 				cd.id = i;
 				_data.push(cd);
 			}
@@ -57,7 +57,6 @@ package com.takumus.ui.list
 				_topY += stage.mouseY - _mouseY;
 				_mouseY = stage.mouseY;
 			}else if(_mode == "sort"){
-				//_sortCell.y = mouseY;
 			}
 		}
 		private function mouseUp(event:MouseEvent):void
@@ -73,7 +72,7 @@ package com.takumus.ui.list
 			if(_mode == "scroll"){
 				
 			}else if(_mode == "sort"){
-				_sortCell.y = mouseY;
+				_sortCell.y = mouseY - _cellHeight * 0.5;
 			}
 			
 			var tmpTopId:int = -_topY / _cellHeight;
@@ -90,14 +89,14 @@ package com.takumus.ui.list
 				_cell[i].cellId = i;
 				//ソートモードの場合
 				if(_mode == "sort"){
-					trace(_cell[i].contentY);
-					if(scY < _cell[i].contentY){
+					trace(_cell[i]._yForSort);
+					if(scY < _cell[i]._yForSort){
 						if(_sortInsertId < 0){
-							_sortInsertId = _cell[i].cellData.id;
+							_sortInsertId = _cell[i].data.id;
 						}
-						_cell[i].setSortPosition(true, true);
+						_cell[i]._setSortPosition(true, true);
 					}else{
-						_cell[i].setSortPosition(false, true);
+						_cell[i]._setSortPosition(false, true);
 					}
 				}
 			}
@@ -126,15 +125,15 @@ package com.takumus.ui.list
 			_sortCell.y = mouseY;
 			
 			for(var i:int = cellId; i < _cell.length; i ++){
-				_cell[i].setSortPosition(true, false);
+				_cell[i]._setSortPosition(true, false);
 			}
 			start();
 		}
 		private function stopSort():void
 		{
-			_data.insertAt(_sortInsertId, _sortCell.cellData);
+			_data.insertAt(_sortInsertId, _sortCell.data);
 			for(var i:int = 0; i < _cell.length; i ++){
-				_cell[i].setSortPosition(false, false);
+				_cell[i]._setSortPosition(false, false);
 			}
 			for(var i:int = 0; i < _data.length; i ++){
 				_data[i].id = i;
