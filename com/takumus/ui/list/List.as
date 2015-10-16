@@ -11,6 +11,7 @@ package com.takumus.ui.list
 		private var _dataList:Vector.<CellData>;
 		private var _cellList:Vector.<SortableCell>;
 		private var _cellListSize:int;
+		private var _dataListSize:int;
 		private var _cellHeight:Number;
 		
 		private var _topY:Number = 0;
@@ -21,6 +22,8 @@ package com.takumus.ui.list
 		
 		private var _cellForSort:Cell;
 		private var _sortInsertId:int = 0;
+		
+		private var _cellContainer:Sprite;
 		
 		private var CellClass:Class;
 		public function List(CellClass:Class, cellHeight:Number)
@@ -34,18 +37,23 @@ package com.takumus.ui.list
 			_dataList = new Vector.<CellData>();
 			_cellList = new Vector.<SortableCell>();
 			
+			_cellContainer = new Sprite();
+			
 			_cellHeight = cellHeight;
 			
 			_cellForSort = new CellClass(this);
 			_cellForSort.visible = false;
+			
+			addChild(_cellContainer);
 			addChild(_cellForSort);
 			
-			for(var i:int = 0; i < 100; i ++){
+			for(var i:int = 0; i < 50; i ++){
 				var cd:CellData = new CellData();
 				cd.data = "データ"+i;
 				cd.id = i;
 				_dataList.push(cd);
 			}
+			_dataListSize = _dataList.length;
 		}
 		public function resize(width:Number, height:Number):void
 		{
@@ -68,7 +76,7 @@ package com.takumus.ui.list
 				for(i = 0; i < cellListSizeDiff; i ++){
 					cell = new CellClass(this);
 					_cellList.push(cell);
-					addChild(cell);
+					_cellContainer.addChild(cell);
 				}
 			}else if(cellListSizeDiff < 0){
 				//前より少なくなったら
@@ -76,7 +84,7 @@ package com.takumus.ui.list
 				//その分を消す。
 				for(i = 0; i < -cellListSizeDiff; i ++){
 					cell = _cellList.pop();
-					removeChild(cell);
+					_cellContainer.removeChild(cell);
 					cell._dispose();
 					cell = null;
 				}
@@ -124,21 +132,27 @@ package com.takumus.ui.list
 			optimizeCells(topIdV);
 			
 			var scY:Number = _cellForSort.y;
-			_sortInsertId = -1;
+			_sortInsertId = 0;
 			for(var i:int = 0; i < _cellListSize; i ++){
 				var id:int = i + _topId;
+				
+				if(id < 0 || id >= _dataListSize) {
+					_cellList[i].visible = false;
+					continue;
+				}else{
+					_cellList[i].visible = true;
+				}
+				
 				_cellList[i]._setData(_dataList[id]);
 				_cellList[i].y = _topY%_cellHeight + i * _cellHeight;
 				_cellList[i].cellId = i;
 				//ソートモードの場合
 				if(_mode == "sort"){
 					if(scY < _cellList[i]._yForSort){
-						if(_sortInsertId < 0){
-							_sortInsertId = _cellList[i].data.id;
-						}
 						_cellList[i]._setSortPosition(true, true);
 					}else{
 						_cellList[i]._setSortPosition(false, true);
+						_sortInsertId = _cellList[i].data.id + 1;
 					}
 				}
 			}
@@ -162,7 +176,8 @@ package com.takumus.ui.list
 		{
 			_mode = "sort";
 			_cellForSort._setData(_dataList.removeAt(dataId));
-			updateCellDataId();
+			_dataListSize = _dataList.length;
+			updateDataListId();
 			_cellForSort.visible = true;
 			_cellForSort.y = mouseY;
 			
@@ -178,9 +193,8 @@ package com.takumus.ui.list
 			for(i = 0; i < _cellListSize; i ++){
 				_cellList[i]._setSortPosition(false, false);
 			}
-			for(i = 0; i < _dataList.length; i ++){
-				_dataList[i].id = i;
-			}
+			_dataListSize = _dataList.length;
+			updateDataListId();
 			_cellForSort.visible = false;
 			stop();
 		}
@@ -213,9 +227,9 @@ package com.takumus.ui.list
 				}
 			}
 		}
-		private function updateCellDataId():void
+		private function updateDataListId():void
 		{
-			for(var i:int = 0; i < _dataList.length; i ++){
+			for(var i:int = 0; i < _dataListSize; i ++){
 				_dataList[i].id = i;
 			}
 		}
