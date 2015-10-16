@@ -26,7 +26,7 @@ package
 			
 			this.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent):void
 			{
-				if(mouseX > cellWidth - 50){
+				if(mouseX > cellWidth - 70){
 					sortStart();
 				}else{
 					scrollStart();

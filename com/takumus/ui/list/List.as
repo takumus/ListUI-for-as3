@@ -15,6 +15,7 @@ package com.takumus.ui.list
 		private var _cellHeight:Number;
 		
 		private var _topY:Number = 0;
+		private var _topYV:Number = 0;
 		private var _topId:int = 0;
 		
 		private var _mode:String;
@@ -103,7 +104,8 @@ package com.takumus.ui.list
 		private function mouseMove(event:MouseEvent):void
 		{
 			if(_mode == "scroll"){
-				_topY += stage.mouseY - _mouseY;
+				_topYV = stage.mouseY - _mouseY;
+				_topY += _topYV;
 				_mouseY = stage.mouseY;
 			}else if(_mode == "sort"){
 			}
@@ -122,7 +124,10 @@ package com.takumus.ui.list
 				
 			}else if(_mode == "sort"){
 				_cellForSort.y = mouseY - _cellHeight * 0.5;
+			}else{
+				_topY += _topYV;
 			}
+			
 			//先頭のデータid
 			var tmpTopId:int = -_topY / _cellHeight;
 			//データidの変化
@@ -204,6 +209,7 @@ package com.takumus.ui.list
 		private function start():void
 		{
 			_mouseY = stage.mouseY;
+			_topYV = 0;
 			this.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 			this.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		}
