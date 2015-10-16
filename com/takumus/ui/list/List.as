@@ -11,7 +11,7 @@ package com.takumus.ui.list
 		private var _dataList:Vector.<CellData>;
 		private var _cellList:Vector.<SortableCell>;
 		private var _cellListSize:int;
-		private var _cellHeight:Number = 60;
+		private var _cellHeight:Number;
 		
 		private var _topY:Number = 0;
 		private var _topId:int = 0;
@@ -19,7 +19,7 @@ package com.takumus.ui.list
 		private var _mode:String;
 		private var _mouseY:Number;
 		
-		private var _cellForSort:SampleCell;
+		private var _cellForSort:Cell;
 		private var _sortInsertId:int = 0;
 		
 		private var CellClass:Class;
@@ -55,21 +55,42 @@ package com.takumus.ui.list
 			//前のセル数
 			var prevCellListSize:int = _cellListSize;
 			//今のセル数
-			_cellListSize = _height / _cellHeight + 1;
+			_cellListSize = int(_height / _cellHeight + 0.5) + 2;
+			//セルの差
+			var cellListSizeDiff:int = _cellListSize - prevCellListSize;
 			
-			//画面を覆うだけのcellを準備
-			for(var i:int = 0; i < _cellListSize; i ++){
-				//もともとあったらスキップ
-				if(i < prevCellListSize) continue;
-				//無かったら作成
-				var cell:SortableCell = new CellClass(this);
-				_cellList.push(cell);
-				addChild(cell);
-				cell._resize(_width, _cellHeight);
+			var cell:SortableCell;
+			var i:int;
+			if(cellListSizeDiff > 0){
+				//前よりもセルの数が多くなったら
+				
+				//その分を補う。
+				for(i = 0; i < cellListSizeDiff; i ++){
+					cell = new CellClass(this);
+					_cellList.push(cell);
+					addChild(cell);
+				}
+			}else if(cellListSizeDiff < 0){
+				//前より少なくなったら
+				
+				//その分を消す。
+				for(i = 0; i < -cellListSizeDiff; i ++){
+					cell = _cellList.pop();
+					removeChild(cell);
+					cell._dispose();
+					cell = null;
+				}
+			}
+			
+			//セル達をリサイズ
+			for(i = 0; i < _cellListSize; i ++){
+				_cellList[i]._resize(_width, _cellHeight);
 			}
 			//ソート用のセルをリサイズ
 			_cellForSort._resize(_width, _cellHeight);
 			
+			//更新
+			update(null);
 		}
 		private function mouseMove(event:MouseEvent):void
 		{
@@ -104,7 +125,7 @@ package com.takumus.ui.list
 			
 			var scY:Number = _cellForSort.y;
 			_sortInsertId = -1;
-			for(var i:int = 0; i < _cellList.length; i ++){
+			for(var i:int = 0; i < _cellListSize; i ++){
 				var id:int = i + _topId;
 				_cellList[i]._setData(_dataList[id]);
 				_cellList[i].y = _topY%_cellHeight + i * _cellHeight;
@@ -145,7 +166,7 @@ package com.takumus.ui.list
 			_cellForSort.visible = true;
 			_cellForSort.y = mouseY;
 			
-			for(var i:int = cellId; i < _cellList.length; i ++){
+			for(var i:int = cellId; i < _cellListSize; i ++){
 				_cellList[i]._setSortPosition(true, false);
 			}
 			start();
@@ -154,7 +175,7 @@ package com.takumus.ui.list
 		{
 			_dataList.insertAt(_sortInsertId, _cellForSort.data);
 			var i:int;
-			for(i = 0; i < _cellList.length; i ++){
+			for(i = 0; i < _cellListSize; i ++){
 				_cellList[i]._setSortPosition(false, false);
 			}
 			for(i = 0; i < _dataList.length; i ++){

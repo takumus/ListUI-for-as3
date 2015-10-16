@@ -31,6 +31,10 @@ package com.takumus.ui.list
 		protected function resize(width:Number, height:Number):void
 		{
 		}
+		protected function dispose():void
+		{
+			
+		}
 		protected final function scrollStart():void
 		{
 			_list._cell_startScroll();
@@ -44,6 +48,10 @@ package com.takumus.ui.list
 			return _cellWidth;
 		}
 		
+		internal function _dispose():void
+		{
+			dispose();
+		}
 		internal function _setData(data:CellData):void
 		{
 			_data = data;
