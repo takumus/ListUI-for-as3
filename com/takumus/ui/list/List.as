@@ -123,7 +123,6 @@ package com.takumus.ui.list
 			if(_mode == "scroll"){
 				_topYV = stage.mouseY - _mouseY;
 				_mouseY = stage.mouseY;
-				trace(_topYV);
 			}else if(_mode == "sort"){
 				_cellForSort.y = mouseY - _cellHeight * 0.5;
 			}else{
@@ -183,7 +182,10 @@ package com.takumus.ui.list
 		private function startSort(dataId:int, cellId:int):void
 		{
 			_mode = "sort";
-			_cellForSort._setData(_dataList.removeAt(dataId));
+			var data:CellData = _dataList[dataId];
+			_cellForSort._setData(data);
+			_dataList.splice(dataId, 1);
+			
 			_dataListSize = _dataList.length;
 			updateDataListId();
 			_cellForSort.visible = true;
