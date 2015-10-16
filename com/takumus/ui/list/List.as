@@ -127,8 +127,8 @@ package com.takumus.ui.list
 			}else if(_mode == "sort"){
 				_cellForSort.y = mouseY - _cellHeight * 0.5;
 			}else{
+				_topYV *= 0.98;
 			}
-			
 			_topY += _topYV;
 			
 			//先頭のデータid

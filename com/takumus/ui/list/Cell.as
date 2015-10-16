@@ -2,7 +2,7 @@ package com.takumus.ui.list
 {
 	import flash.display.Sprite;
 
-	public class Cell extends Sprite{
+	internal class Cell extends Sprite{
 		//セルの大きさ
 		private var _cellHeight:Number, _cellWidth:Number;
 		
