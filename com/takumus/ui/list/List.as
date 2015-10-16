@@ -8,8 +8,8 @@ package com.takumus.ui.list
 	{
 		private var _width:Number = 100, _height:Number = 100;
 		
-		private var _data:Vector.<CellData>;
-		private var _cell:Vector.<SortableCell>;
+		private var _dataList:Vector.<CellData>;
+		private var _cellList:Vector.<SortableCell>;
 		private var _cellListSize:int;
 		private var _cellHeight:Number = 60;
 		
@@ -31,8 +31,8 @@ package com.takumus.ui.list
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
 			
-			_data = new Vector.<CellData>();
-			_cell = new Vector.<SortableCell>();
+			_dataList = new Vector.<CellData>();
+			_cellList = new Vector.<SortableCell>();
 			
 			_cellHeight = cellHeight;
 			
@@ -44,7 +44,7 @@ package com.takumus.ui.list
 				var cd:CellData = new CellData();
 				cd.data = "データ"+i;
 				cd.id = i;
-				_data.push(cd);
+				_dataList.push(cd);
 			}
 		}
 		public function resize(width:Number, height:Number):void
@@ -63,7 +63,7 @@ package com.takumus.ui.list
 				if(i < prevCellListSize) continue;
 				//無かったら作成
 				var cell:SortableCell = new CellClass(this);
-				_cell.push(cell);
+				_cellList.push(cell);
 				addChild(cell);
 				cell._resize(_width, _cellHeight);
 			}
@@ -94,29 +94,30 @@ package com.takumus.ui.list
 			}else if(_mode == "sort"){
 				_cellForSort.y = mouseY - _cellHeight * 0.5;
 			}
-			
+			//先頭のデータid
 			var tmpTopId:int = -_topY / _cellHeight;
+			//データidの変化
 			var topIdV:int = tmpTopId - _topId;
 			_topId = tmpTopId;
+			//idの変化からセルの並べ替え
 			optimizeCells(topIdV);
 			
 			var scY:Number = _cellForSort.y;
 			_sortInsertId = -1;
-			for(var i:int = 0; i < _cell.length; i ++){
+			for(var i:int = 0; i < _cellList.length; i ++){
 				var id:int = i + _topId;
-				_cell[i]._setData(_data[id]);
-				_cell[i].y = _topY%_cellHeight + i * _cellHeight;
-				_cell[i].cellId = i;
+				_cellList[i]._setData(_dataList[id]);
+				_cellList[i].y = _topY%_cellHeight + i * _cellHeight;
+				_cellList[i].cellId = i;
 				//ソートモードの場合
 				if(_mode == "sort"){
-					trace(_cell[i]._yForSort);
-					if(scY < _cell[i]._yForSort){
+					if(scY < _cellList[i]._yForSort){
 						if(_sortInsertId < 0){
-							_sortInsertId = _cell[i].data.id;
+							_sortInsertId = _cellList[i].data.id;
 						}
-						_cell[i]._setSortPosition(true, true);
+						_cellList[i]._setSortPosition(true, true);
 					}else{
-						_cell[i]._setSortPosition(false, true);
+						_cellList[i]._setSortPosition(false, true);
 					}
 				}
 			}
@@ -139,24 +140,25 @@ package com.takumus.ui.list
 		private function startSort(dataId:int, cellId:int):void
 		{
 			_mode = "sort";
-			_cellForSort._setData(_data.removeAt(dataId));
+			_cellForSort._setData(_dataList.removeAt(dataId));
 			updateCellDataId();
 			_cellForSort.visible = true;
 			_cellForSort.y = mouseY;
 			
-			for(var i:int = cellId; i < _cell.length; i ++){
-				_cell[i]._setSortPosition(true, false);
+			for(var i:int = cellId; i < _cellList.length; i ++){
+				_cellList[i]._setSortPosition(true, false);
 			}
 			start();
 		}
 		private function stopSort():void
 		{
-			_data.insertAt(_sortInsertId, _cellForSort.data);
-			for(var i:int = 0; i < _cell.length; i ++){
-				_cell[i]._setSortPosition(false, false);
+			_dataList.insertAt(_sortInsertId, _cellForSort.data);
+			var i:int;
+			for(i = 0; i < _cellList.length; i ++){
+				_cellList[i]._setSortPosition(false, false);
 			}
-			for(var i:int = 0; i < _data.length; i ++){
-				_data[i].id = i;
+			for(i = 0; i < _dataList.length; i ++){
+				_dataList[i].id = i;
 			}
 			_cellForSort.visible = false;
 			stop();
@@ -181,19 +183,19 @@ package com.takumus.ui.list
 			var i:int = 0
 			if(idV > 0){
 				for(i = 0; i < idV; i ++){
-					_cell.push(_cell.shift());
+					_cellList.push(_cellList.shift());
 				}
 			}else if(idV < 0){
 				idV = -idV;
 				for(i = 0; i < idV; i ++){
-					_cell.unshift(_cell.pop());
+					_cellList.unshift(_cellList.pop());
 				}
 			}
 		}
 		private function updateCellDataId():void
 		{
-			for(var i:int = 0; i < _data.length; i ++){
-				_data[i].id = i;
+			for(var i:int = 0; i < _dataList.length; i ++){
+				_dataList[i].id = i;
 			}
 		}
 		
