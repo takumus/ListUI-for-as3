@@ -128,7 +128,9 @@ package com.takumus.ui.list
 		private function update(event:Event):void
 		{
 			if(_mode == "scroll"){
+				//----------------------------------------//
 				//指でつかんでスクロール中
+				//----------------------------------------//
 				_topYV = stage.mouseY - _mouseY;
 				_mouseY = stage.mouseY;
 				if(_topY + _topYV > 0){
@@ -138,7 +140,9 @@ package com.takumus.ui.list
 				}
 				_topY += _topYV;
 			}else if(_mode == "sort"){
+				//----------------------------------------//
 				//指でつかんでソート中
+				//----------------------------------------//
 				_cellForSort.y = mouseY - _cellHeight * 0.5;
 				
 				var scrollSpeed:Number = _contentsHeight / _height * 2;
@@ -154,18 +158,21 @@ package com.takumus.ui.list
 					tmpMouseY = mouseY - (_height - _startScrollHeight);
 					scrollSpeedPer = -tmpMouseY / _startScrollHeight;
 				}
-				trace(scrollSpeedPer, tmpMouseY);
 				scrollSpeed *= scrollSpeedPer;
-				
-				_topY += scrollSpeed;
+				_topYV = scrollSpeed;
+				_topY += _topYV;
 				
 				if(_topY > 0 || !scrollable){
 					_topY  = 0;
+					_topYV = 0;
 				}else if(_topY < -_contentsHeight + _height){
 					_topY = -_contentsHeight + _height;
+					_topYV = 0;
 				}
 			}else{
+				//----------------------------------------//
 				//指を離して慣性の法則働き中
+				//----------------------------------------//
 				_topY += _topYV;
 				var fixV:Boolean = false;
 				if(_topY > 0 || !scrollable){
@@ -193,6 +200,9 @@ package com.takumus.ui.list
 			//idの変化からセルの並べ替え
 			optimizeCells(topIdV);
 			
+			//高速スクロール時は、ソートのアニメーションをしないよ！
+			var needAnimation:Boolean = (_topYV<0?-_topYV:_topYV) < _cellHeight;
+			
 			var scY:Number = _cellForSort.y;
 			_sortInsertId = 0;
 			for(var i:int = 0; i < _cellListSize; i ++){
@@ -212,10 +222,10 @@ package com.takumus.ui.list
 				if(_mode == "sort"){
 					if(scY < _cellList[i]._yForSort){
 						//下へずらす
-						_cellList[i]._setSortPosition(true, true);
+						_cellList[i]._setSortPosition(true, needAnimation);
 					}else{
 						//上へずらす
-						_cellList[i]._setSortPosition(false, true);
+						_cellList[i]._setSortPosition(false, needAnimation);
 						_sortInsertId = _cellList[i].data.id + 1;
 					}
 				}
@@ -268,6 +278,7 @@ package com.takumus.ui.list
 			_dataListSize = _dataList.length;
 			updateDataListId();
 			_cellForSort.visible = false;
+			_topYV = 0;
 			stop();
 		}
 		//----------------------------------------------------------//

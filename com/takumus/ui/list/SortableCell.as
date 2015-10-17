@@ -4,7 +4,7 @@ package com.takumus.ui.list
 
 	public class SortableCell extends Cell{
 		//sort用
-		private var _sortLower:Boolean;
+		private var _isLower:Boolean;
 		private var _sortOffsetYTween:Tween24;
 		internal var useForSort:Boolean;
 		public function SortableCell(list:List):void
@@ -18,14 +18,15 @@ package com.takumus.ui.list
 		}
 		internal function _setSortPosition(isLower:Boolean, animate:Boolean = false):void
 		{
-			if(_sortLower == isLower) return;
-			_sortLower = isLower;
-			var y:Number = _sortLower?cellHeight:0;
+			if(_isLower == isLower) return;
+			_isLower = isLower;
+			var y:Number = _isLower?cellHeight:0;
+			
+			if(_sortOffsetYTween) _sortOffsetYTween.stop();
 			if(!animate){
 				contents.y = y;
 				return;
 			}
-			if(_sortOffsetYTween) _sortOffsetYTween.stop();
 			_sortOffsetYTween = Tween24.tween(contents, 0.1).y(y);
 			_sortOffsetYTween.play();
 		}
