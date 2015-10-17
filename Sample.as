@@ -20,6 +20,12 @@ package
 			var listArea:Shape = new Shape();
 			_list = new List(SampleCell, 60);
 			
+			var data:Array = [];
+			for(var i:int = 0; i < 100; i ++){
+				data.push("data" + i);
+			}
+			
+			_list.setData(data);
 			addChild(_list);
 			addChild(listArea);
 			

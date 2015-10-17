@@ -15,7 +15,6 @@ package com.takumus.ui.list
 		private var _cellHeight:Number;
 		
 		private var _topY:Number = 0;
-		private var _prevTopY:Number = 0;
 		private var _topYV:Number = 0;
 		private var _topId:int = 0;
 		
@@ -48,14 +47,6 @@ package com.takumus.ui.list
 			
 			addChild(_cellContainer);
 			addChild(_cellForSort);
-			
-			for(var i:int = 0; i < 50; i ++){
-				var cd:CellData = new CellData();
-				cd.data = "データ"+i;
-				cd.id = i;
-				_dataList.push(cd);
-			}
-			_dataListSize = _dataList.length;
 		}
 		public function resize(width:Number, height:Number):void
 		{
@@ -101,6 +92,17 @@ package com.takumus.ui.list
 			
 			//更新
 			update(null);
+		}
+		public function setData(data:Array):void
+		{
+			_dataList.length = 0;
+			for(var i:int = 0; i < data.length; i ++){
+				var cd:CellData = new CellData();
+				cd.data = data[i];
+				cd.id = i;
+				_dataList.push(cd);
+			}
+			_dataListSize = _dataList.length;
 		}
 		private function mouseMove(event:MouseEvent):void
 		{
@@ -226,7 +228,7 @@ package com.takumus.ui.list
 		}
 		private function optimizeCells(idV:int):void
 		{
-			var i:int = 0
+			var i:int = 0;
 			if(idV > 0){
 				for(i = 0; i < idV; i ++){
 					_cellList.push(_cellList.shift());
