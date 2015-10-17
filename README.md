@@ -1,7 +1,23 @@
-# ListUI-for-as3
-*ListUI-for-as3*  
-現在まだ開発段階ですが、AIR for iOS等にも使えるListのUIを作っています。  
-スクロールや要素を掴んでのソートや、削除も可能です。  
-頑張ります。  
+#What is this?
   
-demo : <http://takumus.com/list-ui-for-as3/ListUIforAS3.swf>
+Simple and Fast listUI library for as3.  
+
+---
+
+#Use for
+
+ - Flash contents.
+ - AIR Application.
+ - AIR for mobile.
+
+---
+
+#Demo  
+
+<http://takumus.com/list-ui-for-as3/ListUIforAS3.swf>
+
+---
+
+#How to use
+
+I am currently developing this library.
