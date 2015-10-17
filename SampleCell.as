@@ -13,7 +13,11 @@ package
 		public function SampleCell(list:List):void
 		{
 			super(list);
+			
+			//ラベルアイコン
 			_label = new TextField();
+			
+			//ドラッグアイコン
 			_dragIcon = new DragIcon(30);
 			
 			contents.addChild(_label);
@@ -22,19 +26,22 @@ package
 			_label.mouseEnabled = false;
 			_label.autoSize = "left";
 			_label.text = "A";
-			//_label.border = true;
 			
+			//マウスダウンで、ソートかスクロール開始。
 			this.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent):void
 			{
 				if(mouseX > cellWidth - 70){
+					//ドラッグアイコンらへんだったら、ソート開始
 					sortStart();
 				}else{
+					//それ以外だったらただのスクロール
 					scrollStart();
 				}
 			});
 		}
 		protected override function resize(width:Number, height:Number):void
 		{
+			//セルのサイズ変更時の処理
 			contents.graphics.clear();
 			contents.graphics.lineStyle(1,0xCCCCCC);
 			contents.graphics.beginFill(0xFFFFFF);
@@ -48,6 +55,8 @@ package
 		}
 		protected override function setData(data:CellData):void
 		{
+			//セルにデータが入ったときの処理
+			//data.dataは、setDataで指定したデータ。
 			_label.text = data.data.toString();
 		}
 	}
