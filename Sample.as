@@ -21,7 +21,7 @@ package
 			_list = new List(SampleCell, 60);
 			
 			var data:Array = [];
-			for(var i:int = 0; i < 100; i ++){
+			for(var i:int = 0; i < 300; i ++){
 				data.push("data" + i);
 			}
 			

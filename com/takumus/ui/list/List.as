@@ -30,6 +30,7 @@ package com.takumus.ui.list
 		private var CellClass:Class;
 		
 		private var _startScrollHeight:Number = 50;
+		private var _minScrollSpeed:Number = 30;
 		public function List(CellClass:Class, cellHeight:Number)
 		{
 			super();
@@ -140,17 +141,29 @@ package com.takumus.ui.list
 				//指でつかんでソート中
 				_cellForSort.y = mouseY - _cellHeight * 0.5;
 				
-				var scrollSpeed:Number = _contentsHeight / _height;
+				var scrollSpeed:Number = _contentsHeight / _height * 2;
 				var scrollSpeedPer:Number = 0;
 				var tmpMouseY:Number = 0;
+				if(scrollSpeed < _minScrollSpeed){
+					scrollSpeed = _minScrollSpeed;
+				}
 				if(mouseY < _startScrollHeight){
 					tmpMouseY = _startScrollHeight - mouseY;
+					scrollSpeedPer = tmpMouseY / _startScrollHeight;
 				}else if(mouseY > _height - _startScrollHeight){
 					tmpMouseY = mouseY - (_height - _startScrollHeight);
+					scrollSpeedPer = -tmpMouseY / _startScrollHeight;
 				}
-				trace(tmpMouseY);
+				trace(scrollSpeedPer, tmpMouseY);
 				scrollSpeed *= scrollSpeedPer;
+				
 				_topY += scrollSpeed;
+				
+				if(_topY > 0 || !scrollable){
+					_topY  = 0;
+				}else if(_topY < -_contentsHeight + _height){
+					_topY = -_contentsHeight + _height;
+				}
 			}else{
 				//指を離して慣性の法則働き中
 				_topY += _topYV;
@@ -198,8 +211,10 @@ package com.takumus.ui.list
 				//ソートモードの場合
 				if(_mode == "sort"){
 					if(scY < _cellList[i]._yForSort){
+						//下へずらす
 						_cellList[i]._setSortPosition(true, true);
 					}else{
+						//上へずらす
 						_cellList[i]._setSortPosition(false, true);
 						_sortInsertId = _cellList[i].data.id + 1;
 					}
@@ -274,14 +289,25 @@ package com.takumus.ui.list
 		private function optimizeCells(idV:int):void
 		{
 			var i:int = 0;
+			var cell:SortableCell;
 			if(idV > 0){
 				for(i = 0; i < idV; i ++){
-					_cellList.push(_cellList.shift());
+					cell = _cellList.shift();
+					_cellList.push(cell);
+					if(_mode == "sort"){
+						//下へずらす
+						cell._setSortPosition(true, false);
+					}
 				}
 			}else if(idV < 0){
 				idV = -idV;
 				for(i = 0; i < idV; i ++){
-					_cellList.unshift(_cellList.pop());
+					cell = _cellList.pop();
+					_cellList.unshift(cell);
+					if(_mode == "sort"){
+						//下へずらす
+						cell._setSortPosition(false, false);
+					}
 				}
 			}
 		}
