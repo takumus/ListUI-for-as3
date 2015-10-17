@@ -125,6 +125,7 @@ package com.takumus.ui.list
 		private function update(event:Event):void
 		{
 			if(_mode == "scroll"){
+				//指でつかんでスクロール中
 				_topYV = stage.mouseY - _mouseY;
 				_mouseY = stage.mouseY;
 				if(_topY + _topYV > 0){
@@ -134,10 +135,27 @@ package com.takumus.ui.list
 				}
 				_topY += _topYV;
 			}else if(_mode == "sort"){
+				//指でつかんでソート中
 				_cellForSort.y = mouseY - _cellHeight * 0.5;
 			}else{
-				_topYV *= 0.98;
+				//指を離して慣性の法則働き中
 				_topY += _topYV;
+				var fixV:Boolean = false;
+				if(_topY > 0 || !scrollable){
+					_topY += (0 - _topY) * 0.13;
+					
+					if(_topYV > 0 || !scrollable) fixV = true;
+				}else if(_topY < -_contentsHeight + _height){
+					_topY += (-_contentsHeight + _height - _topY) * 0.13;
+					
+					if(_topYV < 0) fixV = true;
+				}
+				if(fixV){
+					//逆らう加速度だったら、加速度減らす。
+					_topYV += (0 - _topYV) * 0.3;
+				}else{
+					_topYV *= 0.98;
+				}
 			}
 			
 			//先頭のデータid
@@ -173,6 +191,10 @@ package com.takumus.ui.list
 					}
 				}
 			}
+		}
+		private function get scrollable():Boolean
+		{
+			return _contentsHeight > _height;
 		}
 		//----------------------------------------------------------//
 		//スクロール
