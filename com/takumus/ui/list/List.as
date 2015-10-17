@@ -28,6 +28,8 @@ package com.takumus.ui.list
 		private var _cellContainer:Sprite;
 		
 		private var CellClass:Class;
+		
+		private var _startScrollHeight:Number = 50;
 		public function List(CellClass:Class, cellHeight:Number)
 		{
 			super();
@@ -137,6 +139,18 @@ package com.takumus.ui.list
 			}else if(_mode == "sort"){
 				//指でつかんでソート中
 				_cellForSort.y = mouseY - _cellHeight * 0.5;
+				
+				var scrollSpeed:Number = _contentsHeight / _height;
+				var scrollSpeedPer:Number = 0;
+				var tmpMouseY:Number = 0;
+				if(mouseY < _startScrollHeight){
+					tmpMouseY = _startScrollHeight - mouseY;
+				}else if(mouseY > _height - _startScrollHeight){
+					tmpMouseY = mouseY - (_height - _startScrollHeight);
+				}
+				trace(tmpMouseY);
+				scrollSpeed *= scrollSpeedPer;
+				_topY += scrollSpeed;
 			}else{
 				//指を離して慣性の法則働き中
 				_topY += _topYV;
@@ -224,6 +238,7 @@ package com.takumus.ui.list
 			_cellForSort.y = mouseY;
 			
 			for(var i:int = cellId; i < _cellListSize; i ++){
+				//対象以降を下へずらす
 				_cellList[i]._setSortPosition(true, false);
 			}
 			start();
