@@ -204,7 +204,7 @@ package com.takumus.ui.list
 			var needAnimation:Boolean = (_topYV<0?-_topYV:_topYV) < _cellHeight;
 			
 			var scY:Number = _cellForSort.y;
-			_sortInsertId = 0;
+			_sortInsertId = _topId;
 			for(var i:int = 0; i < _cellListSize; i ++){
 				var id:int = i + _topId;
 				
