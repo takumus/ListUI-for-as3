@@ -31,6 +31,8 @@ package com.takumus.ui.list
 		
 		private var _startScrollHeight:Number = 50;
 		private var _minScrollSpeed:Number = 30;
+		
+		private var _scrollBar:ScrollBar;
 		public function List(CellClass:Class, cellHeight:Number)
 		{
 			super();
@@ -44,6 +46,8 @@ package com.takumus.ui.list
 			
 			_cellContainer = new Sprite();
 			
+			_scrollBar = new ScrollBar();
+			
 			_cellHeight = cellHeight;
 			
 			_cellForSort = new CellClass(this);
@@ -51,6 +55,7 @@ package com.takumus.ui.list
 			
 			addChild(_cellContainer);
 			addChild(_cellForSort);
+			addChild(_scrollBar);
 		}
 		public function resize(width:Number, height:Number):void
 		{
@@ -96,6 +101,9 @@ package com.takumus.ui.list
 			
 			//更新
 			update(null);
+			
+			//スクロールバー更新
+			_scrollBar.x = _width - _scrollBar.width;
 		}
 		public function setData(data:Array):void
 		{
@@ -230,6 +238,7 @@ package com.takumus.ui.list
 					}
 				}
 			}
+			
 		}
 		private function get scrollable():Boolean
 		{
