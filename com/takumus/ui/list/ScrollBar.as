@@ -13,6 +13,8 @@ package com.takumus.ui.list
 		
 		private var _barMinHeight:Number;
 		private var _barMinCompressedHeight:Number;
+		
+		private var _prevRenderBarHeight:int;
 		public function ScrollBar(barWidth:Number, barMinHeight:Number = 100, barMinCompressedHeight:Number = 10)
 		{
 			_width = barWidth;
@@ -61,7 +63,7 @@ package com.takumus.ui.list
 				content.y = ratio * (_viewHeight - barHeight);
 			}
 			
-			render(_width, barHeight);
+			_render(barHeight);
 		}
 		private function updateBarHeight():void
 		{
@@ -70,7 +72,15 @@ package com.takumus.ui.list
 			
 			_barHeight = height;
 		}
-		private function render(width:Number, height:Number):void
+		private function _render(height:Number):void
+		{
+			//前と同じ大きさだったら再レンダリングしない
+			if(_prevRenderBarHeight == int(height)) return;
+			_prevRenderBarHeight = height;
+			
+			render(_width, height);
+		}
+		public function render(width:Number, height:Number):void
 		{
 			content.graphics.clear();
 			content.graphics.beginFill(0x000000, 0.3);
