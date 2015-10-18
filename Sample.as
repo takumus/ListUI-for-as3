@@ -30,7 +30,7 @@ package
 			
 			//データ準備
 			var data:Array = [];
-			for(var i:int = 0; i < 300; i ++){
+			for(var i:int = 0; i < 50; i ++){
 				data.push("data" + i);
 			}
 			//リストにデータ適用
