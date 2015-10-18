@@ -6,8 +6,8 @@ package com.takumus.ui.list
 		protected var content:Sprite;
 		
 		private var _width:Number;
-		private var _viewHeight:int;
-		private var _contentHeight:int;
+		private var _viewHeight:Number;
+		private var _contentHeight:Number;
 		
 		private var _barHeight:Number;
 		
@@ -24,13 +24,13 @@ package com.takumus.ui.list
 			this.addChild(content);
 		}
 		//表示部分の高さを指定
-		public function setViewHeight(value:int):void
+		public function setViewHeight(value:Number):void
 		{
 			_viewHeight = value;
 			updateBarHeight();
 		}
 		//中身の高さを指定
-		public function setContentHeight(value:int):void
+		public function setContentHeight(value:Number):void
 		{
 			_contentHeight = value;
 			updateBarHeight();
@@ -44,10 +44,10 @@ package com.takumus.ui.list
 			//overを求める
 			if(ratio < 0){
 				//上にはみ出たら
-				over = (-ratio) * _contentHeight;
+				over = contentY;
 			}else if(ratio > 1){
 				//下にはみ出たら
-				over = (ratio - 1) * _contentHeight;
+				over = _viewHeight - (_contentHeight + contentY);
 			}
 			
 			//バーの最小の高さをセット
@@ -56,6 +56,8 @@ package com.takumus.ui.list
 			
 			//バーを移動
 			if(ratio < 0){
+				//上にはみ出たら
+				content.y = 0;
 			}else if(ratio > 1){
 				//下にはみ出たら
 				content.y = (_viewHeight - barHeight);
