@@ -257,6 +257,22 @@ package com.takumus.ui.list
 			return _contentsHeight > _height;
 		}
 		//----------------------------------------------------------//
+		//削除
+		//----------------------------------------------------------//
+		private function remove(dataId:int, cellId:int):void
+		{
+			_dataList.splice(dataId, 1);
+			_dataListSize = _dataList.length;
+			updateDataListId();
+			for(var i:int = cellId; i < _cellListSize; i ++){
+				//対象以降を下へずらす
+				_cellList[i]._setSortPosition(true, false);
+				//上へ戻す
+				_cellList[i]._setSortPosition(false, true);
+			}
+		}
+		
+		//----------------------------------------------------------//
 		//スクロール
 		//----------------------------------------------------------//
 		private function startScroll():void
@@ -358,6 +374,10 @@ package com.takumus.ui.list
 		internal function _cell_startScroll():void
 		{
 			startScroll();
+		}
+		internal function _cell_remove(dataId:int, cellId:int):void
+		{
+			remove(dataId, cellId);
 		}
 	}
 }
