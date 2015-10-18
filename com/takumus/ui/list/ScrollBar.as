@@ -11,9 +11,14 @@ package com.takumus.ui.list
 		private var _contentHeight:int;
 		
 		private var _barHeight:Number;
-		public function ScrollBar(barWidth:Number)
+		
+		private var _barMinHeight:Number;
+		private var _barMinCompressedHeight:Number;
+		public function ScrollBar(barWidth:Number, barMinHeight:Number = 100, barMinCompressedHeight:Number = 10)
 		{
 			_width = barWidth;
+			_barMinHeight = barMinHeight;
+			_barMinCompressedHeight = barMinCompressedHeight;
 			content = new Sprite();
 			this.addChild(content);
 		}
@@ -46,7 +51,7 @@ package com.takumus.ui.list
 			
 			//バーの最小の高さをセット
 			barHeight -= over;
-			if(barHeight < 10)barHeight = 10;
+			if(barHeight < _barMinCompressedHeight) barHeight = _barMinCompressedHeight;
 			
 			//バーを移動
 			if(ratio < 0){
@@ -62,15 +67,14 @@ package com.takumus.ui.list
 		private function updateBarHeight():void
 		{
 			var height:Number = _viewHeight / _contentHeight;
-			if(height < 50){
-				height = 50;
-			}
+			if(height < _barMinHeight) height = _barMinHeight;
+			
 			_barHeight = height;
 		}
 		private function render(width:Number, height:Number):void
 		{
 			content.graphics.clear();
-			content.graphics.beginFill(0xFF0000);
+			content.graphics.beginFill(0x000000, 0.3);
 			content.graphics.drawRect(0, 0, width, height);
 			content.graphics.endFill();
 		}
