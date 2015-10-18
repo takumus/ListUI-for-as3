@@ -121,10 +121,8 @@ package com.takumus.ui.list
 				_dataList.push(cd);
 			}
 			_dataListSize = _dataList.length;
-			_contentsHeight = _dataListSize * _cellHeight;
 			
-			//スクロールバー更新
-			_scrollBar.setContentHeight(_contentsHeight);
+			changeDataSize();
 		}
 		private function mouseMove(event:MouseEvent):void
 		{
@@ -270,6 +268,7 @@ package com.takumus.ui.list
 				//上へ戻す
 				_cellList[i]._setSortPosition(false, true);
 			}
+			changeDataSize();
 		}
 		
 		//----------------------------------------------------------//
@@ -334,6 +333,8 @@ package com.takumus.ui.list
 			this.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 			this.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		}
+		
+		//セルを入れ替えて最適化
 		private function optimizeCells(idV:int):void
 		{
 			var i:int = 0;
@@ -359,11 +360,19 @@ package com.takumus.ui.list
 				}
 			}
 		}
+		//セルのデータidを再適用
 		private function updateDataListId():void
 		{
 			for(var i:int = 0; i < _dataListSize; i ++){
 				_dataList[i].id = i;
 			}
+		}
+		//データ数に変化が当たっとき！
+		private function changeDataSize():void
+		{
+			_contentsHeight = _dataListSize * _cellHeight;
+			//スクロールバー更新
+			_scrollBar.setContentHeight(_contentsHeight);
 		}
 		
 		//セルからのアクション
