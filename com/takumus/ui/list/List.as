@@ -33,7 +33,7 @@ package com.takumus.ui.list
 		private var _minScrollSpeed:Number = 30;
 		
 		private var _scrollBar:ScrollBar;
-		public function List(CellClass:Class, cellHeight:Number)
+		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null)
 		{
 			super();
 			
@@ -46,7 +46,11 @@ package com.takumus.ui.list
 			
 			_cellContainer = new Sprite();
 			
-			_scrollBar = new ScrollBar(10);
+			if(scrollBar) {
+				_scrollBar = scrollBar;
+			}else{
+				_scrollBar = new ScrollBar(5, 50, 10);
+			}
 			
 			_cellHeight = cellHeight;
 			
@@ -55,6 +59,7 @@ package com.takumus.ui.list
 			
 			addChild(_cellContainer);
 			addChild(_cellForSort);
+			
 			addChild(_scrollBar);
 		}
 		public function resize(width:Number, height:Number):void

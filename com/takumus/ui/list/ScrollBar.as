@@ -1,6 +1,5 @@
 package com.takumus.ui.list
 {
-	import flash.display.Shape;
 	import flash.display.Sprite;
 	
 	public class ScrollBar extends Sprite {
