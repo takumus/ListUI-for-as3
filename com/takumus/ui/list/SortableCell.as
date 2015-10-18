@@ -27,7 +27,7 @@ package com.takumus.ui.list
 				contents.y = y;
 				return;
 			}
-			_sortOffsetYTween = Tween24.tween(contents, 0.1).y(y);
+			_sortOffsetYTween = Tween24.tween(contents, 0.2).y(y);
 			_sortOffsetYTween.play();
 		}
 	}
