@@ -46,7 +46,7 @@ package com.takumus.ui.list
 			
 			_cellContainer = new Sprite();
 			
-			_scrollBar = new ScrollBar();
+			_scrollBar = new ScrollBar(10);
 			
 			_cellHeight = cellHeight;
 			
@@ -104,6 +104,7 @@ package com.takumus.ui.list
 			
 			//スクロールバー更新
 			_scrollBar.x = _width - _scrollBar.width;
+			_scrollBar.setViewHeight(_height);
 		}
 		public function setData(data:Array):void
 		{
@@ -116,6 +117,9 @@ package com.takumus.ui.list
 			}
 			_dataListSize = _dataList.length;
 			_contentsHeight = _dataListSize * _cellHeight;
+			
+			//スクロールバー更新
+			_scrollBar.setContentHeight(_contentsHeight);
 		}
 		private function mouseMove(event:MouseEvent):void
 		{
@@ -239,6 +243,9 @@ package com.takumus.ui.list
 				}
 			}
 			
+			
+			//スクロールバー移動
+			_scrollBar.setContentY(_topY);
 		}
 		private function get scrollable():Boolean
 		{
