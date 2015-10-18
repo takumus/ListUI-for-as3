@@ -10,6 +10,7 @@ package
 	public class SampleCell extends SortableCell{
 		private var _label:TextField;
 		private var _dragIcon:DragIcon;
+		private var _removeIcon:RemoveIcon;
 		public function SampleCell(list:List):void
 		{
 			super(list);
@@ -18,10 +19,13 @@ package
 			_label = new TextField();
 			
 			//ドラッグアイコン
-			_dragIcon = new DragIcon(30);
+			_dragIcon = new DragIcon(20);
+			//削除アイコン
+			_removeIcon = new RemoveIcon(10);
 			
 			contents.addChild(_label);
 			contents.addChild(_dragIcon);
+			contents.addChild(_removeIcon);
 			
 			_label.mouseEnabled = false;
 			_label.autoSize = "left";
@@ -33,7 +37,10 @@ package
 				if(mouseX > cellWidth - 70){
 					//ドラッグアイコンらへんだったら、ソート開始
 					sortStart();
-				}else{
+				}else if(mouseX < 70){
+					//削除アイコンらへんだったら削除
+					remove();
+				}else{;
 					//それ以外だったらただのスクロール
 					scrollStart();
 				}
@@ -48,10 +55,13 @@ package
 			contents.graphics.drawRect(0,0,width, height);
 			
 			_label.y = (height - _label.height) * 0.5;
-			_label.x = 20;
+			_label.x = 60;
 			
 			_dragIcon.x = width - 40;
 			_dragIcon.y = height * 0.5;
+			
+			_removeIcon.x = 30;
+			_removeIcon.y = height * 0.5;
 		}
 		protected override function setData(data:CellData):void
 		{
@@ -76,5 +86,18 @@ class DragIcon extends Shape{
 		
 		this.graphics.moveTo(-size * 0.5, size * 0.5);
 		this.graphics.lineTo(size * 0.5, size * 0.5);
+	}
+}
+
+class RemoveIcon extends Shape{
+	public function RemoveIcon(size:Number):void
+	{
+		this.graphics.lineStyle(3, 0xCCCCCC);
+		
+		this.graphics.moveTo(-size * 0.5, -size * 0.5);
+		this.graphics.lineTo(size * 0.5, size * 0.5);
+		
+		this.graphics.moveTo(size * 0.5, -size * 0.5);
+		this.graphics.lineTo(-size * 0.5, size * 0.5);
 	}
 }
