@@ -67,7 +67,7 @@ package com.takumus.ui.list
 		}
 		private function updateBarHeight():void
 		{
-			var height:Number = _viewHeight / _contentHeight;
+			var height:Number = (_viewHeight / _contentHeight) * _viewHeight;
 			if(height < _barMinHeight) height = _barMinHeight;
 			
 			_barHeight = height;
