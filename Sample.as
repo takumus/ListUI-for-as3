@@ -21,8 +21,11 @@ package
 		
 		private function init():void
 		{
+			//スクロールバー作成
+			var bar:SampleScrollBar = new SampleScrollBar();
+			
 			//リスト作成
-			_list = new List(SampleCell, 60);
+			_list = new List(SampleCell, 60, bar);
 			addChild(_list);
 			
 			//データ準備
