@@ -34,18 +34,27 @@ package
 			//マウスダウンで、ソートかスクロール開始。
 			this.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent):void
 			{
-				if(mouseX > cellWidth - 70){
-					//ドラッグアイコンらへんだったら、ソート開始
-					sortStart();
-				}else if(mouseX < 70){
-					//削除アイコンらへんだったら削除
-					remove();
-				}else{;
-					//それ以外だったらただのスクロール
+				if(mode == "default"){
+					//通常モードだったら
+					
 					scrollStart();
+				}else if(mode == "edit"){
+					//編集モードだったら
+					
+					if(mouseX > cellWidth - 70){
+						//ドラッグアイコンらへんだったら、ソート開始
+						sortStart();
+					}else if(mouseX < 70){
+						//削除アイコンらへんだったら削除
+						remove();
+					}else{;
+						//それ以外だったらただのスクロール
+						scrollStart();
+					}
 				}
 			});
 		}
+		//リサイズ時
 		protected override function resize(width:Number, height:Number):void
 		{
 			//セルのサイズ変更時の処理
@@ -63,6 +72,16 @@ package
 			_removeIcon.x = 30;
 			_removeIcon.y = height * 0.5;
 		}
+		//モード変更時
+		protected override function setMode(mode:String, def:Boolean):void
+		{
+			if(mode == "default"){
+				_dragIcon.visible = _removeIcon.visible = false;
+			}else{
+				_dragIcon.visible = _removeIcon.visible = true;
+			}
+		}
+		//データセット時
 		protected override function setData(data:CellData):void
 		{
 			//セルにデータが入ったときの処理

@@ -25,7 +25,7 @@ package
 			var bar:SampleScrollBar = new SampleScrollBar();
 			
 			//リスト作成
-			_list = new List(SampleCell, 60, bar);
+			_list = new List(SampleCell, 60, bar, "edit");
 			addChild(_list);
 			
 			//データ準備
