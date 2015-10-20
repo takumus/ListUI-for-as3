@@ -8,7 +8,7 @@ package com.takumus.ui.list
 		
 		private var _data:CellData;
 		protected var contents:Sprite;
-		protected var _list:List;
+		private var _list:List;
 		internal var cellId:int;
 		public function Cell(list:List):void
 		{
@@ -50,6 +50,10 @@ package com.takumus.ui.list
 		protected final function get cellWidth():Number
 		{
 			return _cellWidth;
+		}
+		protected function get list():List
+		{
+			return _list;
 		}
 		protected function setMode(mode:String, def:Boolean):void
 		{

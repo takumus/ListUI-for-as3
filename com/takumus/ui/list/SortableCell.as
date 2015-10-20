@@ -14,7 +14,7 @@ package com.takumus.ui.list
 		protected final function sortStart():void
 		{
 			if(useForSort) return;
-			_list._cell_startSort(data.id, cellId);
+			list._cell_startSort(data.id, cellId);
 		}
 		internal function _setSortPosition(isLower:Boolean, animate:Boolean = false):void
 		{
