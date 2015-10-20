@@ -51,6 +51,10 @@ package com.takumus.ui.list
 		{
 			return _cellWidth;
 		}
+		protected function setMode(mode:String, def:Boolean):void
+		{
+			
+		}
 		
 		internal function _dispose():void
 		{
@@ -68,8 +72,13 @@ package com.takumus.ui.list
 			
 			resize(width, height);
 		}
-		internal function get _yForSort():Number{
+		internal function get _yForSort():Number
+		{
 			return this.y + contents.y;
+		}
+		internal function _setMode(mode:String, def:Boolean):void
+		{
+			this.setMode(mode, def);
 		}
 	}
 }

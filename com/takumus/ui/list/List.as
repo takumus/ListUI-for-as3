@@ -33,6 +33,9 @@ package com.takumus.ui.list
 		private var _minScrollSpeed:Number = 30;
 		
 		private var _scrollBar:ScrollBar;
+		
+		private var _cellMode:String;
+		
 		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null)
 		{
 			super();
@@ -123,6 +126,10 @@ package com.takumus.ui.list
 			_dataListSize = _dataList.length;
 			
 			changeDataSize();
+		}
+		public function setCellMode(mode:String, def:Boolean = false):void
+		{
+			_cellMode = mode;
 		}
 		private function mouseMove(event:MouseEvent):void
 		{
