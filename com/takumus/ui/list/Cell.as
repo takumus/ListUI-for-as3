@@ -9,6 +9,7 @@ package com.takumus.ui.list
 		private var _data:CellData;
 		protected var contents:Sprite;
 		private var _list:List;
+		private var _mode:String;
 		internal var cellId:int;
 		public function Cell(list:List):void
 		{
@@ -55,6 +56,10 @@ package com.takumus.ui.list
 		{
 			return _list;
 		}
+		protected function get mode():String
+		{
+			return _mode;
+		}
 		protected function setMode(mode:String, def:Boolean):void
 		{
 			
@@ -82,6 +87,7 @@ package com.takumus.ui.list
 		}
 		internal function _setMode(mode:String, def:Boolean):void
 		{
+			_mode = mode;
 			this.setMode(mode, def);
 		}
 	}

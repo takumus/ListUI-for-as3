@@ -36,7 +36,7 @@ package com.takumus.ui.list
 		
 		private var _cellMode:String;
 		
-		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null)
+		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default")
 		{
 			super();
 			
@@ -59,6 +59,7 @@ package com.takumus.ui.list
 			
 			_cellForSort = new CellClass(this);
 			_cellForSort.visible = false;
+			_cellMode = defaultCellMode;
 			
 			addChild(_cellContainer);
 			addChild(_cellForSort);
@@ -85,6 +86,8 @@ package com.takumus.ui.list
 				//その分を補う。
 				for(i = 0; i < cellListSizeDiff; i ++){
 					cell = new CellClass(this);
+					//セルのモードをセット（デフォルトモード）
+					cell._setMode(_cellMode, true);
 					_cellList.push(cell);
 					_cellContainer.addChild(cell);
 				}
@@ -130,6 +133,10 @@ package com.takumus.ui.list
 		public function setCellMode(mode:String, def:Boolean = false):void
 		{
 			_cellMode = mode;
+			for(var i:int = 0; i < _cellList.length; i ++){
+				//defモードでセット
+				_cellList[i]._setMode(_cellMode, def);
+			}
 		}
 		private function mouseMove(event:MouseEvent):void
 		{
