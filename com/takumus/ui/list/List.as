@@ -36,6 +36,8 @@ package com.takumus.ui.list
 		
 		private var _cellMode:String;
 		
+		private var _bounceBack:Boolean = false;
+		
 		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default")
 		{
 			super();
@@ -164,8 +166,16 @@ package com.takumus.ui.list
 				_mouseY = stage.mouseY;
 				if(_topY + _topYV > 0){
 					_topYV *= 0.5;
+					if(!_bounceBack){
+						_topY = 0;
+						_topYV = 0;
+					}
 				}else if(_topY + _topYV < -_contentsHeight + _height){
 					_topYV *= 0.5;
+					if(!_bounceBack){
+						_topY = -_contentsHeight + _height;
+						_topYV = 0;
+					}
 				}
 				_topY += _topYV;
 			}else if(_mode == "sort"){
@@ -208,10 +218,18 @@ package com.takumus.ui.list
 					_topY += (0 - _topY) * 0.13;
 					
 					if(_topYV > 0 || !scrollable) fixV = true;
+					if(!_bounceBack){
+						_topY = 0;
+						_topYV = 0;
+					}
 				}else if(_topY < -_contentsHeight + _height){
 					_topY += (-_contentsHeight + _height - _topY) * 0.13;
 					
 					if(_topYV < 0) fixV = true;
+					if(!_bounceBack){
+						_topY = -_contentsHeight + _height;
+						_topYV = 0;
+					}
 				}
 				if(fixV){
 					//逆らう加速度だったら、加速度減らす。
