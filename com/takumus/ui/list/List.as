@@ -1,5 +1,6 @@
 package com.takumus.ui.list
 {
+	import com.takumus.ui.events.ListEvent;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -139,6 +140,13 @@ package com.takumus.ui.list
 				//defモードでセット
 				_cellList[i]._setMode(_cellMode, def);
 			}
+		}
+		public function forceUpdateCell():void
+		{
+			
+		}
+		public function get scrolling():Boolean{
+			return Math.abs(_topYV) > 1;
 		}
 		private function mouseMove(event:MouseEvent):void
 		{
@@ -281,6 +289,8 @@ package com.takumus.ui.list
 			
 			//スクロールバー移動
 			_scrollBar.setContentY(_topY);
+			
+			trace(scrolling);
 		}
 		private function get scrollable():Boolean
 		{
@@ -405,6 +415,9 @@ package com.takumus.ui.list
 			_contentsHeight = _dataListSize * _cellHeight;
 			//スクロールバー更新
 			_scrollBar.setContentHeight(_contentsHeight);
+			
+			//アップデートイベントを出す
+			dispatchEvent(new ListEvent(ListEvent.UPDATE));
 		}
 		
 		//セルからのアクション

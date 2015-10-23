@@ -52,6 +52,10 @@ package com.takumus.ui.list
 		{
 			return _cellWidth;
 		}
+		protected final function get scrolling():Boolean
+		{
+			return _list.scrolling;
+		}
 		protected function get list():List
 		{
 			return _list;
@@ -71,7 +75,12 @@ package com.takumus.ui.list
 		}
 		internal function _setData(data:CellData):void
 		{
+			if(_data && _data.data == data.data) return;
 			_data = data;
+			setData(data);
+		}
+		internal function _forceUpdate():void
+		{
 			setData(data);
 		}
 		internal function _resize(width:Number, height:Number):void
