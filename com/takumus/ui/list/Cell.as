@@ -44,6 +44,10 @@ package com.takumus.ui.list
 		{
 			_list._cell_remove(dataId, cellId);
 		}
+		protected final function select():void
+		{
+			_list._cell_select(dataId);
+		}
 		protected final function get cellHeight():Number
 		{
 			return _cellHeight;

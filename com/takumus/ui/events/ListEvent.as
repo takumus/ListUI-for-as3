@@ -8,9 +8,10 @@ package com.takumus.ui.events {
 	public class ListEvent extends Event {
 		public static const SELECT:String = "com.takumus.ui.events.ListEvent.SELECT";
 		public static const UPDATE:String = "com.takumus.ui.events.ListEvent.UPDATE";
-		private var _data:CellData;
+		public var data:CellData;
 		public function ListEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = false) {
 			super(type, bubbles, cancelable);
 		}
+		
 	}
 }

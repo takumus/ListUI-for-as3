@@ -297,6 +297,15 @@ package com.takumus.ui.list
 			return _contentsHeight > _height;
 		}
 		//----------------------------------------------------------//
+		//選択
+		//----------------------------------------------------------//
+		private function select(dataId:int):void
+		{
+			var e:ListEvent = new ListEvent(ListEvent.SELECT);
+			e.data = _dataList[dataId];
+			dispatchEvent(e);
+		}
+		//----------------------------------------------------------//
 		//削除
 		//----------------------------------------------------------//
 		private function remove(dataId:int, cellId:int):void
@@ -432,6 +441,10 @@ package com.takumus.ui.list
 		internal function _cell_remove(dataId:int, cellId:int):void
 		{
 			remove(dataId, cellId);
+		}
+		internal function _cell_select(dataId:int):void
+		{
+			select(dataId);
 		}
 	}
 }
