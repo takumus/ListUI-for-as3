@@ -29,7 +29,6 @@ package com.takumus.ui.list
 				if(scrolling){
 					pressed = false;
 				}
-				trace(Math.random());
 			};
 			var mouseUp:Function = function(event:MouseEvent):void{
 				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP));
