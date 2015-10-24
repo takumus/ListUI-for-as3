@@ -23,25 +23,28 @@ package com.takumus.ui.list
 		
 		private function initCellMouseEvent():void{
 			var pressed:Boolean;
-			this.addEventListener(MouseEvent.MOUSE_DOWN, function(event:MouseEvent):void{
-				pressed = !scrolling;//スクロール中ならfalse
-				
-				dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
-			});
-			this.addEventListener(MouseEvent.MOUSE_UP, function(event:MouseEvent):void{
-				if(!pressed) return;
+			var mouseMove:Function = function(event:MouseEvent):void{
+				if(scrolling){
+					pressed = false;
+				}
+				trace(Math.random());
+			};
+			var mouseUp:Function = function(event:MouseEvent):void{
 				dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP));
 				if(pressed){
 					dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.CLICK));
 				}
-			});
-			this.addEventListener(MouseEvent.MOUSE_MOVE, function(event:MouseEvent):void{
-				if(!pressed) return;
-				if(scrolling){
-					pressed = false;
-				}
-			});
+				stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
+				stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+			};
 			
+			this.addEventListener(MouseEvent.MOUSE_DOWN, function(event:MouseEvent):void{
+				pressed = !scrolling;//スクロール中ならfalse
+				
+				dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
+				stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
+				stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+			});
 		}
 		
 		public final function get data():CellData
