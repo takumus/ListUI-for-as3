@@ -38,7 +38,7 @@ package com.takumus.ui.list
 		
 		private var _cellMode:String;
 		
-		private var _bounceBack:Boolean = false;
+		private var _bounceBack:Boolean = true;
 		
 		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default")
 		{
@@ -245,7 +245,7 @@ package com.takumus.ui.list
 				}
 				if(fixV){
 					//逆らう加速度だったら、加速度減らす。
-					_topYV += (0 - _topYV) * 0.3;
+					_topYV += (0 - _topYV) * 0.2;
 				}else{
 					_topYV *= 0.98;
 				}
