@@ -4,11 +4,12 @@ package com.takumus.ui.list
 	import flash.events.MouseEvent;
 	import flash.display.Sprite;
 
-	internal class Cell extends Sprite{
+	internal class Cell{
 		//セルの大きさ
 		private var _cellHeight:Number, _cellWidth:Number;
 		
 		private var _data:CellData;
+		internal var _parent:Sprite;
 		protected var body:Sprite;
 		private var _list:List;
 		private var _mode:String;
@@ -16,8 +17,9 @@ package com.takumus.ui.list
 		public function Cell(list:List):void
 		{
 			this._list = list;
+			_parent = new Sprite();
 			this.body = new Sprite();
-			this.addChild(body);
+			_parent.addChild(body);
 			initCellMouseEvent();
 		}
 		
@@ -30,20 +32,20 @@ package com.takumus.ui.list
 				trace(Math.random());
 			};
 			var mouseUp:Function = function(event:MouseEvent):void{
-				dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP));
+				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP));
 				if(pressed){
-					dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.CLICK));
+					body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.CLICK));
 				}
-				stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
-				stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+				body.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
+				body.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 			};
 			
-			this.addEventListener(MouseEvent.MOUSE_DOWN, function(event:MouseEvent):void{
+			body.addEventListener(MouseEvent.MOUSE_DOWN, function(event:MouseEvent):void{
 				pressed = !scrolling;//スクロール中ならfalse
 				
-				dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
-				stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
-				stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
+				body.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
+				body.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 			});
 		}
 		

@@ -32,7 +32,7 @@ package com.takumus.ui.list
 		}
 		internal function get _yForSort():Number
 		{
-			return this.y + body.y;
+			return _parent.y + body.y;
 		}
 	}
 }

@@ -32,7 +32,7 @@ package
 			_label.text = "A";
 			
 			//マウスダウンで、ソートかスクロール開始。
-			this.addEventListener(ListCellMouseEvent.MOUSE_DOWN, function(e:ListCellMouseEvent):void
+			body.addEventListener(ListCellMouseEvent.MOUSE_DOWN, function(e:ListCellMouseEvent):void
 			{
 				if(mode == "default"){
 					//通常モードだったら
@@ -41,7 +41,7 @@ package
 				}else if(mode == "edit"){
 					//編集モードだったら
 					
-					if(mouseX > cellWidth - 70){
+					if(body.mouseX > cellWidth - 70){
 						//ドラッグアイコンらへんだったら、ソート開始
 						sortStart();
 					}else{;
@@ -50,9 +50,9 @@ package
 					}
 				}
 			});
-			this.addEventListener(ListCellMouseEvent.CLICK, function(e:ListCellMouseEvent):void
+			body.addEventListener(ListCellMouseEvent.CLICK, function(e:ListCellMouseEvent):void
 			{
-				if(mouseX < 70){
+				if(body.mouseX < 70){
 					remove();
 				}
 			});

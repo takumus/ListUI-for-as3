@@ -64,11 +64,11 @@ package com.takumus.ui.list
 			_cellHeight = cellHeight;
 			
 			_cellForSort = new CellClass(this);
-			_cellForSort.visible = false;
+			_cellForSort._parent.visible = false;
 			_cellMode = defaultCellMode;
 			
 			addChild(_cellContainer);
-			addChild(_cellForSort);
+			addChild(_cellForSort._parent);
 			
 			addChild(_scrollBar);
 		}
@@ -95,7 +95,7 @@ package com.takumus.ui.list
 					//セルのモードをセット（デフォルトモード）
 					cell._setMode(_cellMode, true);
 					_cellList.push(cell);
-					_cellContainer.addChild(cell);
+					_cellContainer.addChild(cell._parent);
 				}
 			}else if(cellListSizeDiff < 0){
 				//前より少なくなったら
@@ -103,7 +103,7 @@ package com.takumus.ui.list
 				//その分を消す。
 				for(i = 0; i < -cellListSizeDiff; i ++){
 					cell = _cellList.pop();
-					_cellContainer.removeChild(cell);
+					_cellContainer.removeChild(cell._parent);
 					cell._dispose();
 					cell = null;
 				}
@@ -194,7 +194,7 @@ package com.takumus.ui.list
 				//----------------------------------------//
 				//指でつかんでソート中
 				//----------------------------------------//
-				_cellForSort.y = mouseY - _cellHeight * 0.5;
+				_cellForSort._parent.y = mouseY - _cellHeight * 0.5;
 				
 				var scrollSpeed:Number = _contentsHeight / _height * 2;
 				var scrollSpeedPer:Number = 0;
@@ -262,20 +262,20 @@ package com.takumus.ui.list
 			//高速スクロール時は、ソートのアニメーションをしないよ！
 			var needAnimation:Boolean = (_topYV<0?-_topYV:_topYV) < _cellHeight;
 			
-			var scY:Number = _cellForSort.y;
+			var scY:Number = _cellForSort._parent.y;
 			_sortInsertId = _topId;
 			for(var i:int = 0; i < _cellListSize; i ++){
 				var id:int = i + _topId;
 				
 				if(id < 0 || id >= _dataListSize) {
-					_cellList[i].visible = false;
+					_cellList[i]._parent.visible = false;
 					continue;
 				}else{
-					_cellList[i].visible = true;
+					_cellList[i]._parent.visible = true;
 				}
 				
 				_cellList[i]._setData(_dataList[id]);
-				_cellList[i].y = _topY%_cellHeight + i * _cellHeight;
+				_cellList[i]._parent.y = _topY%_cellHeight + i * _cellHeight;
 				_cellList[i].cellId = i;
 				//ソートモードの場合
 				if(_mode == "sort"){
@@ -361,8 +361,8 @@ package com.takumus.ui.list
 			
 			_dataListSize = _dataList.length;
 			updateDataListId();
-			_cellForSort.visible = true;
-			_cellForSort.y = mouseY;
+			_cellForSort._parent.visible = true;
+			_cellForSort._parent.y = mouseY;
 			
 			for(var i:int = cellId; i < _cellListSize; i ++){
 				//対象以降を下へずらす
@@ -379,7 +379,7 @@ package com.takumus.ui.list
 			}
 			_dataListSize = _dataList.length;
 			updateDataListId();
-			_cellForSort.visible = false;
+			_cellForSort._parent.visible = false;
 			_topYV = 0;
 			stop();
 		}
