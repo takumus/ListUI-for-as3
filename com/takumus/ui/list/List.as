@@ -318,11 +318,19 @@ package com.takumus.ui.list
 			_dataListSize = _dataList.length;
 			updateDataListId();
 			
-			//一番下へ行っているか
+			var i:int;
+			
 			if(_topY - _cellHeight < -_contentsHeight + _height){
-				//今のところ対策なし
+				//一番下へ行っている
+				for(i = 0; i < cellId; i ++){
+					//対象以降を下へずらす
+					_cellList[i]._setPosition("top", false);
+					//上へ戻す
+					_cellList[i]._setPosition("center", true);
+				}
 			}else{
-				for(var i:int = cellId; i < _cellListSize; i ++){
+				//一番下へ行っていない
+				for(i = cellId; i < _cellListSize; i ++){
 					//対象以降を下へずらす
 					_cellList[i]._setPosition("bottom", false);
 					//上へ戻す
