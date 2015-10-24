@@ -38,7 +38,7 @@ package com.takumus.ui.list
 		
 		private var _cellMode:String;
 		
-		private var _bounceBack:Boolean = true;
+		private var _bounceBack:Boolean = false;
 		
 		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default")
 		{
