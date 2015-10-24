@@ -136,6 +136,14 @@ package com.takumus.ui.list
 			
 			changeDataSize();
 		}
+		public function addData(data:Object):void
+		{
+			var cd:CellData = new CellData();
+			cd.data = data;
+			cd.id = _dataListSize;
+			_dataList.push(cd);
+			changeDataSize();
+		}
 		public function setCellMode(mode:String, def:Boolean = false):void
 		{
 			_cellMode = mode;
@@ -150,6 +158,10 @@ package com.takumus.ui.list
 		}
 		public function get scrolling():Boolean{
 			return Math.abs(_topYV) > 1;
+		}
+		public function get cellMode():String
+		{
+			return _cellMode;
 		}
 		private function mouseMove(event:MouseEvent):void
 		{
