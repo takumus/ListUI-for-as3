@@ -346,6 +346,7 @@ package com.takumus.ui.list
 			}
 			_topYVList.length = 0;
 			_topYV /= length;
+			if(isNaN(_topYV)) _topYV = 0;
 			stop();
 		}
 		//----------------------------------------------------------//
