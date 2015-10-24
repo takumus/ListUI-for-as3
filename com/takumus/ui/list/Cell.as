@@ -9,15 +9,15 @@ package com.takumus.ui.list
 		private var _cellHeight:Number, _cellWidth:Number;
 		
 		private var _data:CellData;
-		protected var contents:Sprite;
+		protected var body:Sprite;
 		private var _list:List;
 		private var _mode:String;
 		internal var cellId:int;
 		public function Cell(list:List):void
 		{
 			this._list = list;
-			this.contents = new Sprite();
-			this.addChild(contents);
+			this.body = new Sprite();
+			this.addChild(body);
 			initCellMouseEvent();
 		}
 		
@@ -123,10 +123,6 @@ package com.takumus.ui.list
 			_cellHeight = height;
 			
 			resize(width, height);
-		}
-		internal function get _yForSort():Number
-		{
-			return this.y + contents.y;
 		}
 		internal function _setMode(mode:String, def:Boolean):void
 		{

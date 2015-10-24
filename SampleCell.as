@@ -23,9 +23,9 @@ package
 			//削除アイコン
 			_removeIcon = new RemoveIcon(10);
 			
-			contents.addChild(_label);
-			contents.addChild(_dragIcon);
-			contents.addChild(_removeIcon);
+			body.addChild(_label);
+			body.addChild(_dragIcon);
+			body.addChild(_removeIcon);
 			
 			_label.mouseEnabled = false;
 			_label.autoSize = "left";
@@ -61,10 +61,10 @@ package
 		protected override function resize(width:Number, height:Number):void
 		{
 			//セルのサイズ変更時の処理
-			contents.graphics.clear();
-			contents.graphics.lineStyle(1,0xCCCCCC);
-			contents.graphics.beginFill(0xFFFFFF);
-			contents.graphics.drawRect(0,0,width, height);
+			body.graphics.clear();
+			body.graphics.lineStyle(1,0xCCCCCC);
+			body.graphics.beginFill(0xFFFFFF);
+			body.graphics.drawRect(0,0,width, height);
 			
 			_label.y = (height - _label.height) * 0.5;
 			_label.x = 60;

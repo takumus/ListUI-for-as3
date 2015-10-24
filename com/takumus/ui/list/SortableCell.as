@@ -24,11 +24,15 @@ package com.takumus.ui.list
 			
 			if(_sortOffsetYTween) _sortOffsetYTween.stop();
 			if(!animate){
-				contents.y = y;
+				body.y = y;
 				return;
 			}
-			_sortOffsetYTween = Tween24.tween(contents, 0.2).y(y);
+			_sortOffsetYTween = Tween24.tween(body, 0.2).y(y);
 			_sortOffsetYTween.play();
+		}
+		internal function get _yForSort():Number
+		{
+			return this.y + body.y;
 		}
 	}
 }
