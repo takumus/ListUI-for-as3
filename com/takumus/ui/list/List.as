@@ -147,6 +147,7 @@ package com.takumus.ui.list
 		public function setCellMode(mode:String, def:Boolean = false):void
 		{
 			_cellMode = mode;
+			_cellForSort._setMode(mode, def);
 			for(var i:int = 0; i < _cellList.length; i ++){
 				//defモードでセット
 				_cellList[i]._setMode(_cellMode, def);
