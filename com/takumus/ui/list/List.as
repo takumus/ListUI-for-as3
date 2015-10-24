@@ -17,6 +17,7 @@ package com.takumus.ui.list
 		
 		private var _topY:Number = 0;
 		private var _topYV:Number = 0;
+		private var _topYVList:Vector.<Number>;
 		private var _topId:int = 0;
 		private var _contentsHeight:Number = 0;
 		
@@ -49,6 +50,8 @@ package com.takumus.ui.list
 			
 			_dataList = new Vector.<CellData>();
 			_cellList = new Vector.<SortableCell>();
+			
+			_topYVList = new Vector.<Number>();
 			
 			_cellContainer = new Sprite();
 			
@@ -171,6 +174,7 @@ package com.takumus.ui.list
 				//指でつかんでスクロール中
 				//----------------------------------------//
 				_topYV = stage.mouseY - _mouseY;
+				_topYVList.push(_topYV);
 				_mouseY = stage.mouseY;
 				if(_topY + _topYV > 0){
 					_topYV *= 0.5;
@@ -332,6 +336,16 @@ package com.takumus.ui.list
 		}
 		private function stopScroll():void
 		{
+			//加速度をframe分の平均をとって計算
+			_topYVList.reverse();
+			_topYV = 0;
+			var frame:int = 5;
+			var length:int = _topYVList.length<frame?_topYVList.length:frame;
+			for(var i:int = 0; i < length; i ++){
+				_topYV += _topYVList[i];
+			}
+			_topYVList.length = 0;
+			_topYV /= length;
 			stop();
 		}
 		//----------------------------------------------------------//
