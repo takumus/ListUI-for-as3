@@ -54,6 +54,8 @@ package
 			{
 				if(body.mouseX < 70){
 					remove();
+				}else{;
+					select();
 				}
 			});
 		}
