@@ -290,7 +290,7 @@ package com.takumus.ui.list
 			//スクロールバー移動
 			_scrollBar.setContentY(_topY);
 			
-			trace(scrolling);
+			//trace(scrolling);
 		}
 		private function get scrollable():Boolean
 		{

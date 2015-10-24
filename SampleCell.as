@@ -1,5 +1,6 @@
 package
 {
+	import com.takumus.ui.events.ListCellMouseEvent;
 	import com.takumus.ui.list.CellData;
 	import com.takumus.ui.list.List;
 	import com.takumus.ui.list.SortableCell;
@@ -32,7 +33,7 @@ package
 			_label.text = "A";
 			
 			//マウスダウンで、ソートかスクロール開始。
-			this.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent):void
+			this.addEventListener(ListCellMouseEvent.MOUSE_DOWN, function(e:ListCellMouseEvent):void
 			{
 				if(mode == "default"){
 					//通常モードだったら
@@ -44,13 +45,16 @@ package
 					if(mouseX > cellWidth - 70){
 						//ドラッグアイコンらへんだったら、ソート開始
 						sortStart();
-					}else if(mouseX < 70){
-						//削除アイコンらへんだったら削除
-						remove();
 					}else{;
 						//それ以外だったらただのスクロール
 						scrollStart();
 					}
+				}
+			});
+			this.addEventListener(ListCellMouseEvent.CLICK, function(e:ListCellMouseEvent):void
+			{
+				if(mouseX < 70){
+					remove();
 				}
 			});
 		}
