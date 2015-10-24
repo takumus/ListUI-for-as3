@@ -319,7 +319,7 @@ package com.takumus.ui.list
 		private function select(dataId:int):void
 		{
 			var e:ListEvent = new ListEvent(ListEvent.SELECT);
-			e.data = _dataList[dataId];
+			e.cellData = _dataList[dataId];
 			dispatchEvent(e);
 		}
 		//----------------------------------------------------------//
@@ -327,7 +327,8 @@ package com.takumus.ui.list
 		//----------------------------------------------------------//
 		private function remove(dataId:int, cellId:int):void
 		{
-			_dataList.splice(dataId, 1);
+			var e:ListEvent = new ListEvent(ListEvent.REMOVE);
+			e.cellData = _dataList.splice(dataId, 1)[0];
 			_dataListSize = _dataList.length;
 			updateDataListId();
 			
@@ -351,6 +352,8 @@ package com.takumus.ui.list
 				}
 			}
 			changeDataSize();
+			
+			dispatchEvent(e);
 		}
 		
 		//----------------------------------------------------------//

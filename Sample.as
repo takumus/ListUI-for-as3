@@ -40,8 +40,8 @@ package
 			
 			//リストにイベントを追加
 			_list.addEventListener(ListEvent.SELECT, function(event:ListEvent):void{
-				trace(event.data.data);
-				_log.appendText(event.data.id + " : " + event.data.data.toString() + " clicked\n");
+				trace(event.cellData.data);
+				_log.appendText(event.cellData.id + " : " + event.cellData.data.toString() + " clicked\n");
 				_log.scrollV = _log.maxScrollV;
 			});
 			
