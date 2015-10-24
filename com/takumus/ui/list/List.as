@@ -281,10 +281,10 @@ package com.takumus.ui.list
 				if(_mode == "sort"){
 					if(scY < _cellList[i]._yForSort){
 						//下へずらす
-						_cellList[i]._setSortPosition(true, needAnimation);
+						_cellList[i]._setPosition("bottom", needAnimation);
 					}else{
 						//上へずらす
-						_cellList[i]._setSortPosition(false, needAnimation);
+						_cellList[i]._setPosition("center", needAnimation);
 						_sortInsertId = _cellList[i].data.id + 1;
 					}
 				}
@@ -319,9 +319,9 @@ package com.takumus.ui.list
 			updateDataListId();
 			for(var i:int = cellId; i < _cellListSize; i ++){
 				//対象以降を下へずらす
-				_cellList[i]._setSortPosition(true, false);
+				_cellList[i]._setPosition("bottom", false);
 				//上へ戻す
-				_cellList[i]._setSortPosition(false, true);
+				_cellList[i]._setPosition("center", true);
 			}
 			changeDataSize();
 		}
@@ -366,7 +366,7 @@ package com.takumus.ui.list
 			
 			for(var i:int = cellId; i < _cellListSize; i ++){
 				//対象以降を下へずらす
-				_cellList[i]._setSortPosition(true, false);
+				_cellList[i]._setPosition("bottom", false);
 			}
 			start();
 		}
@@ -375,7 +375,7 @@ package com.takumus.ui.list
 			_dataList.insertAt(_sortInsertId, _cellForSort.data);
 			var i:int;
 			for(i = 0; i < _cellListSize; i ++){
-				_cellList[i]._setSortPosition(false, false);
+				_cellList[i]._setPosition("center", false);
 			}
 			_dataListSize = _dataList.length;
 			updateDataListId();
@@ -411,7 +411,7 @@ package com.takumus.ui.list
 					_cellList.push(cell);
 					if(_mode == "sort"){
 						//下へずらす
-						cell._setSortPosition(true, false);
+						cell._setPosition("bottom", false);
 					}
 				}
 			}else if(idV < 0){
@@ -421,7 +421,7 @@ package com.takumus.ui.list
 					_cellList.unshift(cell);
 					if(_mode == "sort"){
 						//下へずらす
-						cell._setSortPosition(false, false);
+						cell._setPosition("center", false);
 					}
 				}
 			}
