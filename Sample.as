@@ -1,5 +1,8 @@
 package
 {
+	import flash.text.TextFormat;
+	import flash.text.TextField;
+	import com.takumus.ui.events.ListEvent;
 	import com.takumus.ui.list.List;
 	
 	import flash.display.Sprite;
@@ -11,6 +14,7 @@ package
 	public class Sample extends Sprite
 	{
 		private var _list:List;
+		private var _log:TextField;
 		public function Sample()
 		{
 			stage.align = StageAlign.TOP_LEFT;
@@ -21,11 +25,8 @@ package
 		
 		private function init():void
 		{
-			//スクロールバー作成
-			var bar:SampleScrollBar = new SampleScrollBar();
-			
-			//リスト作成
-			_list = new List(SampleCell, 60, bar, "edit");
+			//リスト作成(セルクラス, セルの高さ, スクロールバー, デフォルトのモード)
+			_list = new List(SampleCell, 60, new SampleScrollBar(), "edit");
 			addChild(_list);
 			
 			//データ準備
@@ -33,20 +34,40 @@ package
 			for(var i:int = 0; i < 50; i ++){
 				data.push("data" + i);
 			}
+			
 			//リストにデータ適用
 			_list.setData(data);
 			
-			//ステージの大きさに合わせてリサイズ
+			//リストにイベントを追加
+			_list.addEventListener(ListEvent.SELECT, function(event:ListEvent):void{
+				trace(event.data.data);
+				_log.appendText(event.data.id + " : " + event.data.data.toString() + " clicked\n");
+				_log.scrollV = _log.maxScrollV;
+			});
+			
+			
+			//リストをステージの大きさに合わせてリサイズ
 			this.stage.addEventListener(Event.RESIZE, function(e:Event):void
 			{
 				updateSize();
 			});
+			
+			//ログ系
+			_log = new TextField();
+			_log.defaultTextFormat = new TextFormat("", 12, 0x000000);
+			addChild(_log);
+			_log.border = true;
+			_log.background = true;
+			
+			
 			updateSize();
 		}
 		
 		private function updateSize():void
 		{
 			_list.resize(stage.stageWidth, stage.stageHeight);
+			_log.x = (stage.stageWidth - _log.width) / 2;
+			_log.y = (stage.stageHeight - _log.height) / 2;
 		}
 	}
 }
