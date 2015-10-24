@@ -334,7 +334,7 @@ package com.takumus.ui.list
 			
 			var i:int;
 			
-			if(_topY - _cellHeight < -_contentsHeight + _height && scrollable){
+			if(_topY < -_contentsHeight + _height && scrollable){
 				//一番下へ行っている
 				for(i = 0; i < cellId; i ++){
 					//対象以降を下へずらす
