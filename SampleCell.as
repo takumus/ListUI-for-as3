@@ -31,7 +31,7 @@ package
 			_label.autoSize = "left";
 			_label.text = "A";
 			
-			//マウスダウンで、ソートかスクロール開始。
+			//マウスダウン
 			body.addEventListener(ListCellMouseEvent.MOUSE_DOWN, function(e:ListCellMouseEvent):void
 			{
 				if(mode == "default"){
@@ -50,11 +50,14 @@ package
 					}
 				}
 			});
+			//マウスクリック
 			body.addEventListener(ListCellMouseEvent.CLICK, function(e:ListCellMouseEvent):void
 			{
 				if(body.mouseX < 70){
+					//削除アイコンらへんだったら、削除
 					remove();
-				}else{;
+				}else if(body.mouseX < cellWidth - 70){
+					//アイコンにかぶってなかったら、ただのクリック(select)
 					select();
 				}
 			});
@@ -90,7 +93,6 @@ package
 		protected override function setData(data:CellData):void
 		{
 			//セルにデータが入ったときの処理
-			//data.dataは、setDataで指定したデータ。
 			_label.text = data.data.toString();
 		}
 	}
