@@ -317,11 +317,17 @@ package com.takumus.ui.list
 			_dataList.splice(dataId, 1);
 			_dataListSize = _dataList.length;
 			updateDataListId();
-			for(var i:int = cellId; i < _cellListSize; i ++){
-				//対象以降を下へずらす
-				_cellList[i]._setPosition("bottom", false);
-				//上へ戻す
-				_cellList[i]._setPosition("center", true);
+			
+			//一番下へ行っているか
+			if(_topY - _cellHeight < -_contentsHeight + _height){
+				//今のところ対策なし
+			}else{
+				for(var i:int = cellId; i < _cellListSize; i ++){
+					//対象以降を下へずらす
+					_cellList[i]._setPosition("bottom", false);
+					//上へ戻す
+					_cellList[i]._setPosition("center", true);
+				}
 			}
 			changeDataSize();
 		}
