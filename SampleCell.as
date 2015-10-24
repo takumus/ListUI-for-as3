@@ -5,7 +5,6 @@ package
 	import com.takumus.ui.list.List;
 	import com.takumus.ui.list.SortableCell;
 	
-	import flash.events.MouseEvent;
 	import flash.text.TextField;
 
 	public class SampleCell extends SortableCell{
