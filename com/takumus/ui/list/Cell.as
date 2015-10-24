@@ -25,8 +25,11 @@ package com.takumus.ui.list
 		
 		private function initCellMouseEvent():void{
 			var pressed:Boolean;
+			var startX:Number;
+			var startY:Number;
 			var mouseMove:Function = function(event:MouseEvent):void{
-				if(scrolling){
+				if( Math.abs(startX - body.stage.mouseX) > 10||
+					Math.abs(startY - body.stage.mouseY) > 10){
 					pressed = false;
 				}
 			};
@@ -41,7 +44,8 @@ package com.takumus.ui.list
 			
 			body.addEventListener(MouseEvent.MOUSE_DOWN, function(event:MouseEvent):void{
 				pressed = !scrolling;//スクロール中ならfalse
-				
+				startX = body.stage.mouseX;
+				startY = body.stage.mouseY;
 				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
 				body.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 				body.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
