@@ -2,7 +2,7 @@ package com.takumus.ui.list
 {
 	import a24.tween.Tween24;
 
-	public class SortableCell extends Cell{
+	public class SortableCell extends ListCell{
 		//sort用
 		private var _position:String;
 		private var _sortOffsetYTween:Tween24;

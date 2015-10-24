@@ -4,7 +4,7 @@ package com.takumus.ui.list
 	import flash.events.MouseEvent;
 	import flash.display.Sprite;
 
-	internal class Cell{
+	internal class ListCell{
 		//セルの大きさ
 		private var _cellHeight:Number, _cellWidth:Number;
 		
@@ -14,7 +14,7 @@ package com.takumus.ui.list
 		private var _list:List;
 		private var _mode:String;
 		internal var cellId:int;
-		public function Cell(list:List):void
+		public function ListCell(list:List):void
 		{
 			this._list = list;
 			_parent = new Sprite();

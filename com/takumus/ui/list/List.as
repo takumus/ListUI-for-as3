@@ -24,7 +24,7 @@ package com.takumus.ui.list
 		private var _mode:String;
 		private var _mouseY:Number;
 		
-		private var _cellForSort:Cell;
+		private var _cellForSort:ListCell;
 		private var _sortInsertId:int = 0;
 		
 		private var _cellContainer:Sprite;
