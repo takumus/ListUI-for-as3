@@ -176,7 +176,7 @@ package com.takumus.ui.list
 				_topYV = stage.mouseY - _mouseY;
 				_topYVList.push(_topYV);
 				_mouseY = stage.mouseY;
-				if(_topY + _topYV > 0){
+				if(_topY + _topYV > 0 || !scrollable){
 					_topYV *= 0.5;
 					if(!_bounceBack){
 						_topY = 0;
@@ -320,7 +320,7 @@ package com.takumus.ui.list
 			
 			var i:int;
 			
-			if(_topY - _cellHeight < -_contentsHeight + _height){
+			if(_topY - _cellHeight < -_contentsHeight + _height && scrollable){
 				//一番下へ行っている
 				for(i = 0; i < cellId; i ++){
 					//対象以降を下へずらす
