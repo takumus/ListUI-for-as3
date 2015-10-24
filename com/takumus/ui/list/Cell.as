@@ -1,5 +1,7 @@
 package com.takumus.ui.list
 {
+	import com.takumus.ui.events.ListCellMouseEvent;
+	import flash.events.MouseEvent;
 	import flash.display.Sprite;
 
 	internal class Cell extends Sprite{
@@ -16,7 +18,32 @@ package com.takumus.ui.list
 			this._list = list;
 			this.contents = new Sprite();
 			this.addChild(contents);
+			initCellMouseEvent();
 		}
+		
+		private function initCellMouseEvent():void{
+			var pressed:Boolean;
+			this.addEventListener(MouseEvent.MOUSE_DOWN, function(event:MouseEvent):void{
+				pressed = !scrolling;//スクロール中ならfalse
+				
+				dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
+			});
+			this.addEventListener(MouseEvent.MOUSE_UP, function(event:MouseEvent):void{
+				if(!pressed) return;
+				dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP));
+				if(pressed){
+					dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.CLICK));
+				}
+			});
+			this.addEventListener(MouseEvent.MOUSE_MOVE, function(event:MouseEvent):void{
+				if(!pressed) return;
+				if(scrolling){
+					pressed = false;
+				}
+			});
+			
+		}
+		
 		public final function get data():CellData
 		{
 			return _data;
