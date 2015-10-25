@@ -189,7 +189,8 @@ package com.takumus.ui.list
 		private function mouseDown(event:MouseEvent):void
 		{
 			this.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
-			startScroll();
+			//マウスダウン時はデフォでscrollStartする。
+			if(_mode == "none") startScroll();
 		}
 		private function mouseUp(event:MouseEvent):void
 		{
@@ -381,7 +382,7 @@ package com.takumus.ui.list
 		//----------------------------------------------------------//
 		private function startScroll():void
 		{
-			if(_mode == "none") _mode = "scroll";
+			_mode = "scroll";
 			start();
 		}
 		private function stopScroll():void
