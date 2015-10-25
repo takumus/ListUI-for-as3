@@ -446,6 +446,8 @@ package com.takumus.ui.list
 			_cellForSort._parent.visible = false;
 			_topYV = 0;
 			stop();
+			//ソートしたのでアップデートイベント
+			dispatchEvent(new ListEvent(ListEvent.UPDATE));
 		}
 		//----------------------------------------------------------//
 		//共通
