@@ -41,6 +41,7 @@ package com.takumus.ui.list
 		public static var _bounceBack:Boolean = false;
 		
 		private var _enabled:Boolean;
+		
 		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default")
 		{
 			super();
@@ -187,6 +188,14 @@ package com.takumus.ui.list
 		public function get enabled():Boolean
 		{
 			return _enabled;
+		}
+		public function getData():Array
+		{
+			var data:Array = [];
+			for(var i:int = 0; i < _dataListSize; i ++){
+				data.push(_dataList[i].data);
+			}
+			return data;
 		}
 		
 		
