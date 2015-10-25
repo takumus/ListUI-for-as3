@@ -424,7 +424,7 @@ package com.takumus.ui.list
 		{
 			_mode = "sort";
 			var data:CellData = _dataList[dataId];
-			_cellForSort._setData(data);
+			_cellForSort._setData(data, true);
 			_dataList.splice(dataId, 1);
 			
 			_dataListSize = _dataList.length;

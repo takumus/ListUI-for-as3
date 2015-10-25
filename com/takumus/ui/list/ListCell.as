@@ -129,9 +129,9 @@ package com.takumus.ui.list
 		{
 			dispose();
 		}
-		internal function _setData(data:CellData):void
+		internal function _setData(data:CellData, force:Boolean = false):void
 		{
-			if(_data && _data.data == data.data) return;
+			if(_data && _data.data == data.data && !force) return;
 			_data = data;
 			setData(data);
 		}
