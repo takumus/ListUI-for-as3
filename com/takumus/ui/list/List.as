@@ -147,6 +147,7 @@ package com.takumus.ui.list
 			cd.data = data;
 			cd.id = _dataListSize;
 			_dataList.push(cd);
+			_dataListSize = _dataList.length;
 			changeDataSize();
 		}
 		public function setCellMode(mode:String, def:Boolean = false):void
