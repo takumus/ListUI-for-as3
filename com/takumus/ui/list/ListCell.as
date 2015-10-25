@@ -116,7 +116,7 @@ package com.takumus.ui.list
 		}
 		internal function _forceUpdate():void
 		{
-			setData(data);
+			setData(_data);
 		}
 		internal function _resize(width:Number, height:Number):void
 		{

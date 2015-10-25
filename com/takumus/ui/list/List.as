@@ -38,7 +38,7 @@ package com.takumus.ui.list
 		
 		private var _cellMode:String;
 		
-		private var _bounceBack:Boolean = false;
+		public static var _bounceBack:Boolean = false;
 		
 		private var _enabled:Boolean;
 		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default")
@@ -159,7 +159,11 @@ package com.takumus.ui.list
 		}
 		public function forceUpdateCell():void
 		{
-			
+			for(var i:int = 0; i < _cellListSize; i ++){
+				if(_cellList[i]._parent.visible){
+					_cellList[i]._forceUpdate();
+				}
+			}
 		}
 		public function get scrolling():Boolean{
 			return Math.abs(_topYV) > 1;
