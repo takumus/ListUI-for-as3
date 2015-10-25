@@ -51,7 +51,8 @@ package com.takumus.ui.list
 			};
 			
 			body.addEventListener(MouseEvent.MOUSE_DOWN, function(event:MouseEvent):void{
-				pressed = !scrolling;//スクロール中ならfalse
+				if(scrolling) return;
+				pressed = true;
 				startX = body.stage.mouseX;
 				startY = body.stage.mouseY;
 				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
