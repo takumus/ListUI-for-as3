@@ -74,6 +74,7 @@ package com.takumus.ui.list
 			addChild(_scrollBar);
 			
 			enabled = true;
+			_mode = "none";
 		}
 		public function resize(width:Number, height:Number):void
 		{
@@ -170,7 +171,7 @@ package com.takumus.ui.list
 		public function set enabled(value:Boolean):void
 		{
 			if(_enabled == value) return;
-			
+			_enabled = value;
 			if(_enabled){
 				this.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
 			}else{
@@ -390,7 +391,7 @@ package com.takumus.ui.list
 		//----------------------------------------------------------//
 		private function startScroll():void
 		{
-			_mode = "scroll";
+			if(_mode == "none") _mode = "scroll";
 			start();
 		}
 		private function stopScroll():void
@@ -447,9 +448,10 @@ package com.takumus.ui.list
 		//----------------------------------------------------------//
 		private function start():void
 		{
+			trace(_mode);
 			_mouseY = stage.mouseY;
 			_topYV = 0;
-			mouseDown(null);
+			//mouseDown(null);
 		}
 		private function stop():void
 		{
