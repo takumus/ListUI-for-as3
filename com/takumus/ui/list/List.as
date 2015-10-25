@@ -188,17 +188,8 @@ package com.takumus.ui.list
 		
 		private function mouseDown(event:MouseEvent):void
 		{
-			this.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 			this.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 			startScroll();
-		}
-		private function mouseMove(event:MouseEvent):void
-		{
-			if(_mode == "scroll"){
-				//_topY += stage.mouseY - _mouseY;
-				//_mouseY = stage.mouseY;
-			}else if(_mode == "sort"){
-			}
 		}
 		private function mouseUp(event:MouseEvent):void
 		{
@@ -207,7 +198,6 @@ package com.takumus.ui.list
 			}else if(_mode == "sort"){
 				stopSort();
 			}
-			this.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 			this.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		}
 		private function update(event:Event):void
