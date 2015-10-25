@@ -31,7 +31,7 @@ package com.takumus.ui.list
 				if( Math.abs(startX - body.stage.mouseX) > 10||
 					Math.abs(startY - body.stage.mouseY) > 10){
 					pressed = false;
-					//mouseUp(null);
+					mouseUp(null);
 				}
 			};
 			var mouseUp:Function = function(event:MouseEvent):void{
