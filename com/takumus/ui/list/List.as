@@ -198,7 +198,10 @@ package com.takumus.ui.list
 			}
 			return data;
 		}
-		
+		public function getCell():Vector.<SortableCell>
+		{
+			return _cellList;
+		}
 		
 		private function mouseDown(event:MouseEvent):void
 		{
@@ -275,7 +278,7 @@ package com.takumus.ui.list
 				_topY += _topYV;
 				var fixV:Boolean = false;
 				if(_topY > 0 || !scrollable){
-					_topY += (0 - _topY) * 0.13;
+					_topY += (0 - _topY) * 0.15;
 					
 					if(_topYV > 0 || !scrollable) fixV = true;
 					if(!_bounceBack){
@@ -283,7 +286,7 @@ package com.takumus.ui.list
 						_topYV = 0;
 					}
 				}else if(_topY < -_contentsHeight + _height){
-					_topY += (-_contentsHeight + _height - _topY) * 0.13;
+					_topY += (-_contentsHeight + _height - _topY) * 0.15;
 					
 					if(_topYV < 0) fixV = true;
 					if(!_bounceBack){
@@ -293,7 +296,7 @@ package com.takumus.ui.list
 				}
 				if(fixV){
 					//逆らう加速度だったら、加速度減らす。
-					_topYV += (0 - _topYV) * 0.2;
+					_topYV += (0 - _topYV) * 0.3;
 				}else{
 					_topYV *= 0.98;
 				}
@@ -366,10 +369,9 @@ package com.takumus.ui.list
 			e.cellData = _dataList.splice(dataId, 1)[0];
 			_dataListSize = _dataList.length;
 			updateDataListId();
-			
 			var i:int;
 			
-			if(_topY < -_contentsHeight + _height && scrollable){
+			if(_topY - 5 < -_contentsHeight + _height && scrollable){
 				//一番下へ行っている
 				for(i = 0; i < cellId; i ++){
 					//対象以降を下へずらす
@@ -387,6 +389,7 @@ package com.takumus.ui.list
 				}
 			}
 			changeDataSize();
+			update(null);
 			
 			dispatchEvent(e);
 		}
@@ -455,7 +458,7 @@ package com.takumus.ui.list
 		//----------------------------------------------------------//
 		private function start():void
 		{
-			trace(_mode);
+			//trace(_mode);
 			_mouseY = stage.mouseY;
 			_topYV = 0;
 			//mouseDown(null);

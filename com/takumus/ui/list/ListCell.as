@@ -31,6 +31,7 @@ package com.takumus.ui.list
 				if( Math.abs(startX - body.stage.mouseX) > 10||
 					Math.abs(startY - body.stage.mouseY) > 10){
 					pressed = false;
+					//mouseUp(null);
 				}
 			};
 			var mouseUp:Function = function(event:MouseEvent):void{
@@ -40,6 +41,13 @@ package com.takumus.ui.list
 				}
 				body.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
 				body.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+				
+				var cellList:Vector.<SortableCell> = _list.getCell();
+				//trace(cellId);
+				for(var i:int = 0; i < cellList.length; i ++){
+					if(cellList[i].cellId != cellId) cellList[i]._mouse_up_other();
+					//trace(":"+cellList[i].cellId);
+				}
 			};
 			
 			body.addEventListener(MouseEvent.MOUSE_DOWN, function(event:MouseEvent):void{
@@ -49,6 +57,11 @@ package com.takumus.ui.list
 				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
 				body.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 				body.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+				
+				var cellList:Vector.<SortableCell> = _list.getCell();
+				for(var i:int = 0; i < cellList.length; i ++){
+					if(cellList[i].cellId != cellId) cellList[i]._mouse_down_other();
+				}
 			});
 		}
 		
@@ -103,7 +116,14 @@ package com.takumus.ui.list
 		{
 			
 		}
-		
+		internal function _mouse_down_other():void
+		{
+			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN_OTHER));
+		}
+		internal function _mouse_up_other():void
+		{
+			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP_OTHER));
+		}
 		internal function _dispose():void
 		{
 			dispose();
