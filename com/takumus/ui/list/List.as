@@ -40,6 +40,7 @@ package com.takumus.ui.list
 		
 		private var _bounceBack:Boolean = false;
 		
+		private var _enabled:Boolean;
 		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default")
 		{
 			super();
@@ -71,6 +72,8 @@ package com.takumus.ui.list
 			addChild(_cellForSort._parent);
 			
 			addChild(_scrollBar);
+			
+			enabled = true;
 		}
 		public function resize(width:Number, height:Number):void
 		{
@@ -164,6 +167,30 @@ package com.takumus.ui.list
 		{
 			return _cellMode;
 		}
+		public function set enabled(value:Boolean):void
+		{
+			if(_enabled == value) return;
+			
+			if(_enabled){
+				this.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
+			}else{
+				this.removeEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
+			}
+			
+			_enabled = value;
+		}
+		public function get enabled():Boolean
+		{
+			return _enabled;
+		}
+		
+		
+		private function mouseDown(event:MouseEvent):void
+		{
+			this.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+			this.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
+			startScroll();
+		}
 		private function mouseMove(event:MouseEvent):void
 		{
 			if(_mode == "scroll"){
@@ -179,6 +206,8 @@ package com.takumus.ui.list
 			}else if(_mode == "sort"){
 				stopSort();
 			}
+			this.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
+			this.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		}
 		private function update(event:Event):void
 		{
@@ -420,14 +449,11 @@ package com.takumus.ui.list
 		{
 			_mouseY = stage.mouseY;
 			_topYV = 0;
-			this.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
-			this.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
+			mouseDown(null);
 		}
 		private function stop():void
 		{
 			_mode = "none";
-			this.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
-			this.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		}
 		
 		//セルを入れ替えて最適化
@@ -478,10 +504,6 @@ package com.takumus.ui.list
 		internal function _cell_startSort(dataId:int, cellId:int):void
 		{
 			startSort(dataId, cellId);
-		}
-		internal function _cell_startScroll():void
-		{
-			startScroll();
 		}
 		internal function _cell_remove(dataId:int, cellId:int):void
 		{

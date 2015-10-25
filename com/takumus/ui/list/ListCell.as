@@ -71,10 +71,6 @@ package com.takumus.ui.list
 		{
 			
 		}
-		protected final function scrollStart():void
-		{
-			_list._cell_startScroll();
-		}
 		protected final function remove():void
 		{
 			_list._cell_remove(dataId, cellId);
