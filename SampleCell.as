@@ -36,17 +36,14 @@ package
 			{
 				if(mode == "default"){
 					//通常モードだったら
+					//何もない
 					
-					scrollStart();
 				}else if(mode == "edit"){
 					//編集モードだったら
 					
 					if(body.mouseX > cellWidth - 70){
 						//ドラッグアイコンらへんだったら、ソート開始
 						sortStart();
-					}else{;
-						//それ以外だったらただのスクロール
-						scrollStart();
 					}
 				}
 			});
