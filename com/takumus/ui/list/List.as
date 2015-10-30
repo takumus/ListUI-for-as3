@@ -23,9 +23,12 @@ package com.takumus.ui.list
 		
 		private var _mode:String;
 		private var _mouseY:Number;
+		private var _prevMouseY:Number;
+		private var _mouseYV:Number;
 		
 		private var _cellForSort:ListCell;
 		private var _sortInsertId:int = 0;
+		private var _freezeScrollSort:Boolean;
 		
 		private var _cellContainer:Sprite;
 		
@@ -205,6 +208,7 @@ package com.takumus.ui.list
 		
 		private function mouseDown(event:MouseEvent):void
 		{
+			_prevMouseY = mouseY;
 			this.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 			//マウスダウン時はデフォでscrollStartする。
 			if(_mode == "none") startScroll();
@@ -220,6 +224,7 @@ package com.takumus.ui.list
 		}
 		private function update(event:Event):void
 		{
+			_mouseYV = mouseY - _prevMouseY;
 			if(_mode == "scroll"){
 				//----------------------------------------//
 				//指でつかんでスクロール中
@@ -256,10 +261,14 @@ package com.takumus.ui.list
 				if(mouseY < _startScrollHeight){
 					tmpMouseY = _startScrollHeight - mouseY;
 					scrollSpeedPer = tmpMouseY / _startScrollHeight;
+					if(_mouseYV < 0) _freezeScrollSort = false;
 				}else if(mouseY > _height - _startScrollHeight){
 					tmpMouseY = mouseY - (_height - _startScrollHeight);
 					scrollSpeedPer = -tmpMouseY / _startScrollHeight;
+					if(_mouseYV > 0) _freezeScrollSort = false;
 				}
+				if(_freezeScrollSort) scrollSpeedPer = 0;
+				
 				scrollSpeed *= scrollSpeedPer;
 				_topYV = scrollSpeed;
 				_topY += _topYV;
@@ -436,6 +445,7 @@ package com.takumus.ui.list
 				//対象以降を下へずらす
 				_cellList[i]._setPosition("bottom", false);
 			}
+			_freezeScrollSort = true;
 			start();
 		}
 		private function stopSort():void
