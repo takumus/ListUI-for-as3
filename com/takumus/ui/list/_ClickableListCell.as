@@ -14,14 +14,16 @@ package com.takumus.ui.list
 			super(list);
 			this.body.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
 		}
-		private function mouseMove(event:MouseEvent):void{
+		private function mouseMove(event:MouseEvent):void
+		{
 			if( Math.abs(_startX - body.stage.mouseX) > 10||
 				Math.abs(_startY - body.stage.mouseY) > 10){
 				_pressed = false;
 				mouseUp(null);
 			}
 		}
-		private function mouseUp(event:MouseEvent):void{
+		private function mouseUp(event:MouseEvent):void
+		{
 			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP));
 			if(_pressed){
 				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.CLICK));
@@ -36,7 +38,8 @@ package com.takumus.ui.list
 				//trace(":"+cellList[i].cellId);
 			}
 		}
-		private function mouseDown(event:MouseEvent):void{
+		private function mouseDown(event:MouseEvent):void
+		{
 			if(scrolling) return;
 			_pressed = true;
 			_startX = body.stage.mouseX;
@@ -49,6 +52,11 @@ package com.takumus.ui.list
 			for(var i:int = 0; i < cellList.length; i ++){
 				if(cellList[i].cellId != cellId) cellList[i]._mouse_down_other();
 			}
+		}
+		override internal function _dispose():void
+		{
+			this.body.removeEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
+			super._dispose();
 		}
 	}
 }
