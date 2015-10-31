@@ -20,50 +20,6 @@ package com.takumus.ui.list
 			_parent = new Sprite();
 			this.body = new Sprite();
 			_parent.addChild(body);
-			initCellMouseEvent();
-		}
-		
-		private function initCellMouseEvent():void{
-			var pressed:Boolean;
-			var startX:Number;
-			var startY:Number;
-			var mouseMove:Function = function(event:MouseEvent):void{
-				if( Math.abs(startX - body.stage.mouseX) > 10||
-					Math.abs(startY - body.stage.mouseY) > 10){
-					pressed = false;
-					mouseUp(null);
-				}
-			};
-			var mouseUp:Function = function(event:MouseEvent):void{
-				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP));
-				if(pressed){
-					body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.CLICK));
-				}
-				body.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
-				body.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
-				
-				var cellList:Vector.<_SortableListCell> = _list.getCell();
-				//trace(cellId);
-				for(var i:int = 0; i < cellList.length; i ++){
-					if(cellList[i].cellId != cellId) cellList[i]._mouse_up_other();
-					//trace(":"+cellList[i].cellId);
-				}
-			};
-			
-			body.addEventListener(MouseEvent.MOUSE_DOWN, function(event:MouseEvent):void{
-				if(scrolling) return;
-				pressed = true;
-				startX = body.stage.mouseX;
-				startY = body.stage.mouseY;
-				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
-				body.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
-				body.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
-				
-				var cellList:Vector.<_SortableListCell> = _list.getCell();
-				for(var i:int = 0; i < cellList.length; i ++){
-					if(cellList[i].cellId != cellId) cellList[i]._mouse_down_other();
-				}
-			});
 		}
 		
 		public final function get data():CellData
