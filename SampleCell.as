@@ -3,11 +3,11 @@ package
 	import com.takumus.ui.events.ListCellMouseEvent;
 	import com.takumus.ui.list.CellData;
 	import com.takumus.ui.list.List;
-	import com.takumus.ui.list.SortableCell;
+	import com.takumus.ui.list.ListCell;
 	
 	import flash.text.TextField;
 
-	public class SampleCell extends SortableCell{
+	public class SampleCell extends ListCell{
 		private var _label:TextField;
 		private var _dragIcon:DragIcon;
 		private var _removeIcon:RemoveIcon;

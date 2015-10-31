@@ -1,6 +1,7 @@
 package com.takumus.ui.list
 {
 	import com.takumus.ui.events.ListEvent;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -10,7 +11,7 @@ package com.takumus.ui.list
 		private var _width:Number = 100, _height:Number = 100;
 		
 		private var _dataList:Vector.<CellData>;
-		private var _cellList:Vector.<SortableCell>;
+		private var _cellList:Vector.<_SortableListCell>;
 		private var _cellListSize:int;
 		private var _dataListSize:int;
 		private var _cellHeight:Number;
@@ -26,7 +27,7 @@ package com.takumus.ui.list
 		private var _prevMouseY:Number;
 		private var _mouseYV:Number;
 		
-		private var _cellForSort:ListCell;
+		private var _cellForSort:_ListCell;
 		private var _sortInsertId:int = 0;
 		private var _freezeScrollSort:Boolean;
 		
@@ -45,16 +46,20 @@ package com.takumus.ui.list
 		
 		private var _enabled:Boolean;
 		
-		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default")
+		private var _backgroundColor:uint;
+		private var _backgroundVisible:Boolean;
+		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default", backgroundVisible:Boolean = true, backgroundColor:uint = 0xffffff)
 		{
 			super();
 			
 			this.CellClass = CellClass;
+			this._backgroundColor = backgroundColor;
+			this._backgroundVisible = backgroundVisible;
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
 			
 			_dataList = new Vector.<CellData>();
-			_cellList = new Vector.<SortableCell>();
+			_cellList = new Vector.<_SortableListCell>();
 			
 			_topYVList = new Vector.<Number>();
 			
@@ -92,7 +97,7 @@ package com.takumus.ui.list
 			//セルの差
 			var cellListSizeDiff:int = _cellListSize - prevCellListSize;
 			
-			var cell:SortableCell;
+			var cell:_SortableListCell;
 			var i:int;
 			if(cellListSizeDiff > 0){
 				//前よりもセルの数が多くなったら
@@ -130,6 +135,9 @@ package com.takumus.ui.list
 			//スクロールバー更新
 			_scrollBar.x = _width - _scrollBar.width;
 			_scrollBar.setViewHeight(_height);
+			
+			//背景描画
+			if(_backgroundVisible) renderBackground(_width, _height);
 		}
 		public function setData(data:Array):void
 		{
@@ -201,11 +209,18 @@ package com.takumus.ui.list
 			}
 			return data;
 		}
-		public function getCell():Vector.<SortableCell>
+		public function getCell():Vector.<_SortableListCell>
 		{
 			return _cellList;
 		}
 		
+		private function renderBackground(width:Number, height:Number):void
+		{
+			this.graphics.clear();
+			this.graphics.beginFill(_backgroundColor);
+			this.graphics.drawRect(0, 0, width, height);
+			this.graphics.endFill();
+		}
 		private function mouseDown(event:MouseEvent):void
 		{
 			_prevMouseY = mouseY;
@@ -482,7 +497,7 @@ package com.takumus.ui.list
 		private function optimizeCells(idV:int):void
 		{
 			var i:int = 0;
-			var cell:SortableCell;
+			var cell:_SortableListCell;
 			if(idV > 0){
 				for(i = 0; i < idV; i ++){
 					cell = _cellList.shift();
