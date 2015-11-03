@@ -253,7 +253,6 @@ package com.takumus.ui.list
 				//----------------------------------------//
 				_topYV = stage.mouseY - _mouseY;
 				_topYVList.push(_topYV);
-				_mouseY = stage.mouseY;
 				if(_topY + _topYV > 0 || !scrollable){
 					_topYV *= 0.5;
 					if(!_bounceBack){
@@ -266,6 +265,8 @@ package com.takumus.ui.list
 						_topY = -_contentsHeight + _height;
 						_topYV = 0;
 					}
+				}else{
+					_mouseY = stage.mouseY;
 				}
 				_topY += _topYV;
 			}else if(_mode == "sort"){
