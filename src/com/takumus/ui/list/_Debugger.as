@@ -42,7 +42,9 @@ package com.takumus.ui.list
 					"}");
 			});
 			_list.addEventListener(ListEvent.UPDATE, function(e:ListEvent):void{
-				add("updated{\n" +
+				add("update{\n" +
+					"  data : " +
+					_list.getData()+"\n"+
 					"}");
 			});
 		}
