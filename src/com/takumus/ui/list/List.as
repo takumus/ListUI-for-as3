@@ -458,7 +458,7 @@ package com.takumus.ui.list
 		//----------------------------------------------------------//
 		//ソート
 		//----------------------------------------------------------//
-		private function startSort(dataId:int, cellId:int):void
+		private function beginSort(dataId:int, cellId:int):void
 		{
 			_mode = "sort";
 			var data:CellData = _dataList[dataId];
@@ -552,9 +552,9 @@ package com.takumus.ui.list
 		}
 		
 		//セルからのアクション
-		internal function _cell_startSort(dataId:int, cellId:int):void
+		internal function _cell_beginSort(dataId:int, cellId:int):void
 		{
-			startSort(dataId, cellId);
+			beginSort(dataId, cellId);
 		}
 		internal function _cell_remove(dataId:int, cellId:int):void
 		{

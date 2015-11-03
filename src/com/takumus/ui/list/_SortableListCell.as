@@ -12,10 +12,10 @@ package com.takumus.ui.list
 		{
 			super(list);
 		}
-		protected final function sortStart():void
+		protected final function beginSort():void
 		{
 			if(useForSort) return;
-			list._cell_startSort(data.id, cellId);
+			list._cell_beginSort(data.id, cellId);
 		}
 		internal function _setPosition(position:String, animate:Boolean = false):void
 		{
