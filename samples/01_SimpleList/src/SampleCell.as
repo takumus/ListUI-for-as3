@@ -16,6 +16,7 @@ package
 			_label = new TextField();
 			_label.mouseEnabled = false;
 			_label.autoSize = "left";
+			_label.text = "A";
 			
 			//addChild to "body"
 			body.addChild(_label);
