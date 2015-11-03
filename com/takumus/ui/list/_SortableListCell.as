@@ -1,12 +1,13 @@
 package com.takumus.ui.list
 {
-	import a24.tween.Tween24;
+	import flash.events.Event;
 
 	internal class _SortableListCell extends _ClickableListCell{
 		//sort用
 		private var _position:String;
-		private var _sortOffsetYTween:Tween24;
 		internal var useForSort:Boolean;
+		private var _targetY:Number;
+		private var _playing:Boolean;
 		public function _SortableListCell(list:List):void
 		{
 			super(list);
@@ -29,18 +30,39 @@ package com.takumus.ui.list
 			}else{;
 				y = -cellHeight;
 			}
-			
-			if(_sortOffsetYTween) _sortOffsetYTween.stop();
+			_targetY = y;
 			if(!animate){
 				body.y = y;
 				return;
 			}
-			_sortOffsetYTween = Tween24.tween(body, 0.2).y(y);
-			_sortOffsetYTween.play();
+			
+			stopAnimation();
+			startAnimation();
 		}
 		internal function get _yForSort():Number
 		{
 			return _parent.y + body.y;
+		}
+		
+		private function animation(event:Event):void
+		{
+			body.y += (_targetY - body.y)*0.4;
+			var diff:Number = body.y - _targetY;
+			diff *= diff<0?-1:1;
+			if(diff < 1){
+				body.y = _targetY;
+				stopAnimation();
+			}
+		}
+		private function startAnimation():void
+		{
+			body.addEventListener(Event.ENTER_FRAME, animation);
+			_playing = true;
+		}
+		private function stopAnimation():void
+		{
+			if(_playing) body.removeEventListener(Event.ENTER_FRAME, animation);
+			_playing = false;
 		}
 	}
 }
