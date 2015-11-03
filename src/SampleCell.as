@@ -15,7 +15,7 @@ package
 		{
 			super(list);
 			
-			//ラベルアイコン
+			//label
 			_label = new TextField();
 			
 			//ドラッグアイコン
