@@ -36,10 +36,14 @@ package com.takumus.ui.list
 					"}");
 			});
 			_list.addEventListener(ListEvent.SELECT, function(e:ListEvent):void{
-				
+				add("select{\n" +
+					"  data : " + e.cellData.data + "\n" +
+					"  id   : " + e.cellData.id + "\n" +
+					"}");
 			});
 			_list.addEventListener(ListEvent.UPDATE, function(e:ListEvent):void{
-				
+				add("updated{\n" +
+					"}");
 			});
 		}
 		public function add(log:String):void
