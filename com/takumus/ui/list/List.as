@@ -213,7 +213,14 @@ package com.takumus.ui.list
 		{
 			return _cellList;
 		}
-		
+		public function set scrollPosition(value:Number):void
+		{
+			if(scrollable)_topY = -value * (_contentsHeight-_height);
+		}
+		public function get scrollPosition():Number
+		{
+			return -_topY / (_contentsHeight-_height);
+		}
 		private function renderBackground(width:Number, height:Number):void
 		{
 			this.graphics.clear();
@@ -368,8 +375,6 @@ package com.takumus.ui.list
 			
 			//スクロールバー移動
 			_scrollBar.setContentY(_topY);
-			
-			//trace(scrolling);
 		}
 		private function get scrollable():Boolean
 		{
