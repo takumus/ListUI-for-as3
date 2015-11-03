@@ -43,11 +43,14 @@ package com.takumus.ui.list
 		private var _cellMode:String;
 		
 		public static var _bounceBack:Boolean = false;
+		public static var _debug:Boolean = false;
 		
 		private var _enabled:Boolean;
 		
 		private var _backgroundColor:uint;
 		private var _backgroundVisible:Boolean;
+		
+		private var _debugger:_Debugger;
 		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default", backgroundVisible:Boolean = true, backgroundColor:uint = 0xffffff)
 		{
 			super();
@@ -84,6 +87,11 @@ package com.takumus.ui.list
 			
 			enabled = true;
 			_mode = "none";
+			
+			if(_debug) {
+				_debugger = new _Debugger(200, 200, this);
+				this.addChild(_debugger);
+			}
 		}
 		public function resize(width:Number, height:Number):void
 		{
