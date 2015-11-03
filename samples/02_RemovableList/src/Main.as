@@ -22,6 +22,10 @@ package
 		
 		private function init():void
 		{
+			//enable debug mode
+			List._debug = true;
+			
+			
 			//create List
 			_list = new List(SampleCell, 60);
 			addChild(_list);
