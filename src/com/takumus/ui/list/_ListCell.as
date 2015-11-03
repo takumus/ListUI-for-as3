@@ -1,7 +1,6 @@
 package com.takumus.ui.list
 {
 	import com.takumus.ui.events.ListCellMouseEvent;
-	import flash.events.MouseEvent;
 	import flash.display.Sprite;
 
 	internal class _ListCell{
@@ -75,11 +74,11 @@ package com.takumus.ui.list
 		}
 		internal function _mouse_down_other():void
 		{
-			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN_OTHER));
+			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN_OTHER, null));
 		}
 		internal function _mouse_up_other():void
 		{
-			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP_OTHER));
+			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP_OTHER, null));
 		}
 		internal function _dispose():void
 		{

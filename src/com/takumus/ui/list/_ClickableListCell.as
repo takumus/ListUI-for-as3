@@ -24,9 +24,9 @@ package com.takumus.ui.list
 		}
 		private function mouseUp(event:MouseEvent):void
 		{
-			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP));
+			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_UP, event));
 			if(_pressed){
-				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.CLICK));
+				body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.CLICK, event));
 			}
 			body.stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
 			body.stage.removeEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
@@ -44,7 +44,7 @@ package com.takumus.ui.list
 			_pressed = true;
 			_startX = body.stage.mouseX;
 			_startY = body.stage.mouseY;
-			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN));
+			body.dispatchEvent(new ListCellMouseEvent(ListCellMouseEvent.MOUSE_DOWN, event));
 			body.stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 			body.stage.addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
 			
