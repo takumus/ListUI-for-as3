@@ -159,6 +159,8 @@ package com.takumus.ui.list
 			_dataListSize = _dataList.length;
 			
 			changeDataSize();
+			
+			scrollPosition = 0;
 		}
 		public function addData(data:Object):void
 		{
