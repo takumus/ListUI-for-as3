@@ -23,6 +23,7 @@ package
 		private function init():void
 		{
 			//create List
+			//attach SampleBar to List
 			_list = new List(SampleCell, 60, new SampleBar());
 			addChild(_list);
 			
