@@ -2,8 +2,8 @@ package com.takumus.ui.list
 {
 	import flash.display.Sprite;
 	
-	public class ScrollBar extends Sprite {
-		protected var content:Sprite;
+	public class ScrollBar {
+		internal var _body:Sprite;
 		
 		private var _width:Number;
 		private var _viewHeight:Number;
@@ -20,8 +20,8 @@ package com.takumus.ui.list
 			_width = barWidth;
 			_barMinHeight = barMinHeight;
 			_barMinCompressedHeight = barMinCompressedHeight;
-			content = new Sprite();
-			this.addChild(content);
+			_body = new Sprite();
+			//this.addChild(content);
 		}
 		//表示部分の高さを指定
 		public function setViewHeight(value:Number):void
@@ -57,19 +57,19 @@ package com.takumus.ui.list
 			//バーを移動
 			if(ratio < 0){
 				//上にはみ出たら
-				content.y = 0;
+				_body.y = 0;
 			}else if(ratio > 1){
 				//下にはみ出たら
-				content.y = (_viewHeight - barHeight);
+				_body.y = (_viewHeight - barHeight);
 			}else{
-				content.y = ratio * (_viewHeight - barHeight);
+				_body.y = ratio * (_viewHeight - barHeight);
 			}
 			
 			_render(barHeight);
 		}
 		private function updateBarHeight():void
 		{
-			content.visible = _viewHeight <= _contentHeight;
+			_body.visible = _viewHeight <= _contentHeight;
 			
 			var height:Number = (_viewHeight / _contentHeight) * _viewHeight;
 			if(height < _barMinHeight) height = _barMinHeight;
@@ -84,19 +84,23 @@ package com.takumus.ui.list
 			
 			render(_width, height);
 		}
-		public function render(width:Number, height:Number):void
+		protected function render(width:Number, height:Number):void
 		{
-			content.graphics.clear();
-			content.graphics.beginFill(0x000000, 0.3);
-			content.graphics.drawRect(0, 0, width, height);
-			content.graphics.endFill();
+			_body.graphics.clear();
+			_body.graphics.beginFill(0x000000, 0.3);
+			_body.graphics.drawRect(0, 0, width, height);
+			_body.graphics.endFill();
 		}
 		
-		public override function get width():Number
+		protected function get body():Sprite
+		{
+			return _body;
+		}
+		public function get width():Number
 		{
 			return _width;
 		}
-		public override function get height():Number
+		public function get height():Number
 		{
 			return _viewHeight;
 		}

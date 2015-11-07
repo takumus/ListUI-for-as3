@@ -83,7 +83,7 @@ package com.takumus.ui.list
 			addChild(_cellContainer);
 			addChild(_cellForSort._parent);
 			
-			addChild(_scrollBar);
+			addChild(_scrollBar._content);
 			
 			enabled = true;
 			_mode = "none";
@@ -141,7 +141,7 @@ package com.takumus.ui.list
 			update(null);
 			
 			//スクロールバー更新
-			_scrollBar.x = _width - _scrollBar.width;
+			_scrollBar._content.x = _width - _scrollBar.width;
 			_scrollBar.setViewHeight(_height);
 			
 			//背景描画
