@@ -162,12 +162,19 @@ package com.takumus.ui.list
 			
 			scrollPosition = 0;
 		}
-		public function addData(data:Object):void
+		public function addData(data:Object, first:Boolean = false):void
 		{
 			var cd:CellData = new CellData();
 			cd.data = data;
 			cd.id = _dataListSize;
-			_dataList.push(cd);
+			if(first){
+				_dataList.unshift(cd);
+				for(var i:int = 0; i < _dataList.length; i ++){
+					_dataList[i].id = i;
+				}
+			}else{
+				_dataList.push(cd);
+			}
 			_dataListSize = _dataList.length;
 			changeDataSize();
 		}
