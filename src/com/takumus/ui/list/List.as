@@ -232,7 +232,10 @@ package com.takumus.ui.list
 		}
 		public function set scrollPosition(value:Number):void
 		{
-			if(scrollable)_topY = -value * (_contentsHeight-_height);
+			if(scrollable){
+				_topY = -value * (_contentsHeight-_height);
+				_topYV = 0;
+			}
 		}
 		public function get scrollPosition():Number
 		{
