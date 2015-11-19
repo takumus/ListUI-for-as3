@@ -238,6 +238,11 @@ package com.takumus.ui.list
 		{
 			return -_topY / (_contentsHeight-_height);
 		}
+		public function get cellContainer():Sprite
+		{
+			return _cellContainer;
+		}
+		
 		private function renderBackground(width:Number, height:Number):void
 		{
 			this.graphics.clear();
