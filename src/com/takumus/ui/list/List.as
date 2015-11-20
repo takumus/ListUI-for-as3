@@ -190,9 +190,8 @@ package com.takumus.ui.list
 		public function forceUpdateCell():void
 		{
 			for(var i:int = 0; i < _cellListSize; i ++){
-				if(_cellList[i]._parent.visible){
-					_cellList[i]._forceUpdate();
-				}
+				var id:int = i + _topId;
+				if(id < _dataListSize) _cellList[i]._setData(_dataList[id], true);
 			}
 		}
 		public function get scrolling():Boolean{
@@ -382,7 +381,7 @@ package com.takumus.ui.list
 					_cellList[i]._parent.visible = true;
 				}
 				
-				_cellList[i]._setData(_dataList[id]);
+				_cellList[i]._setData(_dataList[id], false);
 				_cellList[i]._parent.y = _topY%_cellHeight + i * _cellHeight;
 				_cellList[i].cellId = i;
 				//ソートモードの場合

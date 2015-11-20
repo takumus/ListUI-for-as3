@@ -86,13 +86,13 @@ package com.takumus.ui.list
 		}
 		internal function _setData(data:CellData, force:Boolean = false):void
 		{
-			if(_data && _data.data == data.data && !force) return;
+			if(!force){
+				if(_data == data){
+					return;
+				}
+			}
 			_data = data;
 			setData(data);
-		}
-		internal function _forceUpdate():void
-		{
-			setData(_data);
 		}
 		internal function _resize(width:Number, height:Number):void
 		{
