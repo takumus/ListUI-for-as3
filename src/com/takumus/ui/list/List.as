@@ -59,8 +59,6 @@ package com.takumus.ui.list
 			this._backgroundColor = backgroundColor;
 			this._backgroundVisible = backgroundVisible;
 			
-			this.addEventListener(Event.ENTER_FRAME, update);
-			
 			_dataList = new Vector.<CellData>();
 			_cellList = new Vector.<_SortableListCell>();
 			
@@ -159,6 +157,7 @@ package com.takumus.ui.list
 			_dataListSize = _dataList.length;
 			
 			changeDataSize();
+			update(null);
 			
 			scrollPosition = 0;
 		}
@@ -207,8 +206,10 @@ package com.takumus.ui.list
 			_enabled = value;
 			if(_enabled){
 				this.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
+				this.addEventListener(Event.ENTER_FRAME, update);
 			}else{
 				this.removeEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
+				this.removeEventListener(Event.ENTER_FRAME, update);
 			}
 			
 			_enabled = value;
