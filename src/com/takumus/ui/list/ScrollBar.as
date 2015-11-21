@@ -92,10 +92,6 @@ package com.takumus.ui.list
 			_body.graphics.endFill();
 		}
 		
-		protected function get body():Sprite
-		{
-			return _body;
-		}
 		public function get width():Number
 		{
 			return _width;
@@ -103,6 +99,10 @@ package com.takumus.ui.list
 		public function get height():Number
 		{
 			return _viewHeight;
+		}
+		public function get body():Sprite
+		{
+			return _body;
 		}
 	}
 }
