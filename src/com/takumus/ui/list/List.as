@@ -291,8 +291,9 @@ package com.takumus.ui.list
 						_topYV = 0;
 					}
 				}else{
-					_mouseY = stage.mouseY;
+					
 				}
+				_mouseY = stage.mouseY;
 				_topY += _topYV;
 			}else if(_mode == "sort"){
 				//----------------------------------------//
