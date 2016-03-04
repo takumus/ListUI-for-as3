@@ -27,7 +27,7 @@ package com.takumus.ui.list
 		private var _prevMouseY:Number;
 		private var _mouseYV:Number;
 		
-		private var _cellForSort:_ListCell;
+		private var _cellForSort:ListCell;
 		private var _sortInsertId:int = 0;
 		private var _freezeScrollSort:Boolean;
 		
@@ -76,6 +76,7 @@ package com.takumus.ui.list
 			
 			_cellForSort = new CellClass(this);
 			_cellForSort._parent.visible = false;
+			_cellForSort.useForSort = true;
 			_cellMode = defaultCellMode;
 			
 			addChild(_cellContainer);

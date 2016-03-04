@@ -5,7 +5,7 @@ package com.takumus.ui.list
 	internal class _SortableListCell extends _ClickableListCell{
 		//sort用
 		private var _position:String;
-		internal var useForSort:Boolean;
+		private var _useForSort:Boolean;
 		private var _targetY:Number;
 		private var _playing:Boolean;
 		public function _SortableListCell(list:List):void
@@ -14,8 +14,12 @@ package com.takumus.ui.list
 		}
 		protected final function beginSort():void
 		{
-			if(useForSort) return;
+			if(_useForSort) return;
 			list._cell_beginSort(data.id, cellId);
+		}
+		public function set useForSort(val:Boolean):void
+		{
+			_useForSort = val;
 		}
 		internal function _setPosition(position:String, animate:Boolean = false):void
 		{
