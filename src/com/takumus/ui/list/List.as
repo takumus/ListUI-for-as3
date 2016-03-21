@@ -51,11 +51,13 @@ package com.takumus.ui.list
 		private var _backgroundVisible:Boolean;
 		
 		private var _debugger:_Debugger;
-		public function List(CellClass:Class, cellHeight:Number = 50, scrollBar:ScrollBar = null, defaultCellMode:String = "default", backgroundVisible:Boolean = true, backgroundColor:uint = 0xffffff)
+		private var _cellSpace:Number;
+		public function List(CellClass:Class, cellHeight:Number = 50, cellSpace:Number = 0, scrollBar:ScrollBar = null, defaultCellMode:String = "default", backgroundVisible:Boolean = true, backgroundColor:uint = 0xffffff)
 		{
 			super();
 			
 			this.CellClass = CellClass;
+			_cellSpace = cellSpace;
 			this._backgroundColor = backgroundColor;
 			this._backgroundVisible = backgroundVisible;
 			
@@ -385,7 +387,7 @@ package com.takumus.ui.list
 				}
 				
 				_cellList[i]._setData(_dataList[id], false);
-				_cellList[i]._parent.y = _topY%_cellHeight + i * _cellHeight;
+				_cellList[i]._parent.y = _topY%_cellHeight + i * (_cellHeight + _cellSpace) + _cellSpace;
 				_cellList[i].cellId = i;
 				//ソートモードの場合
 				if(_mode == "sort"){
@@ -562,7 +564,7 @@ package com.takumus.ui.list
 		//データ数に変化が当たっとき！
 		private function changeDataSize():void
 		{
-			_contentsHeight = _dataListSize * _cellHeight;
+			_contentsHeight = _dataListSize * (_cellHeight + _cellSpace) + _cellSpace;
 			//スクロールバー更新
 			_scrollBar.setContentHeight(_contentsHeight);
 			
