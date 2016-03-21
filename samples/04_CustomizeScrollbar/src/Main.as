@@ -24,7 +24,7 @@ package
 		{
 			//create List
 			//attach SampleBar to List
-			_list = new List(SampleCell, 60, new SampleBar());
+			_list = new List(SampleCell, 60, 0, new SampleBar());
 			addChild(_list);
 			
 			//create Data
