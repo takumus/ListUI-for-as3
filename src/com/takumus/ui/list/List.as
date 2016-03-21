@@ -15,7 +15,7 @@ package com.takumus.ui.list
 		private var _cellListSize:int;
 		private var _dataListSize:int;
 		private var _cellHeight:Number;
-		
+		private var _realCellHeight:Number;
 		private var _topY:Number = 0;
 		private var _topYV:Number = 0;
 		private var _topYVList:Vector.<Number>;
@@ -75,7 +75,7 @@ package com.takumus.ui.list
 			}
 			
 			_cellHeight = cellHeight;
-			
+			_realCellHeight = cellHeight + cellSpace;
 			_cellForSort = new CellClass(this);
 			_cellForSort._parent.visible = false;
 			_cellForSort.useForSort = true;
@@ -102,7 +102,7 @@ package com.takumus.ui.list
 			//前のセル数
 			var prevCellListSize:int = _cellListSize;
 			//今のセル数
-			_cellListSize = int(_height / _cellHeight + 0.5) + 2;
+			_cellListSize = int(_height / _realCellHeight + 0.5) + 2;
 			//セルの差
 			var cellListSizeDiff:int = _cellListSize - prevCellListSize;
 			
@@ -302,7 +302,7 @@ package com.takumus.ui.list
 				//----------------------------------------//
 				//指でつかんでソート中
 				//----------------------------------------//
-				_cellForSort._parent.y = mouseY - _cellHeight * 0.5;
+				_cellForSort._parent.y = mouseY - _realCellHeight * 0.5;
 				
 				var scrollSpeed:Number = _contentsHeight / _height * 2;
 				var scrollSpeedPer:Number = 0;
@@ -364,7 +364,7 @@ package com.takumus.ui.list
 			}
 			
 			//先頭のデータid
-			var tmpTopId:int = -_topY / _cellHeight;
+			var tmpTopId:int = -_topY / _realCellHeight;
 			//データidの変化
 			var topIdV:int = tmpTopId - _topId;
 			_topId = tmpTopId;
@@ -372,7 +372,7 @@ package com.takumus.ui.list
 			optimizeCells(topIdV);
 			
 			//高速スクロール時は、ソートのアニメーションをしないよ！
-			var needAnimation:Boolean = (_topYV<0?-_topYV:_topYV) < _cellHeight;
+			var needAnimation:Boolean = (_topYV<0?-_topYV:_topYV) < _realCellHeight;
 			
 			var scY:Number = _cellForSort._parent.y;
 			_sortInsertId = _topId;
@@ -387,7 +387,7 @@ package com.takumus.ui.list
 				}
 				
 				_cellList[i]._setData(_dataList[id], false);
-				_cellList[i]._parent.y = _topY%_cellHeight + i * (_cellHeight + _cellSpace) + _cellSpace;
+				_cellList[i]._parent.y = _cellSpace + _topY%_realCellHeight + i * (_realCellHeight);
 				_cellList[i].cellId = i;
 				//ソートモードの場合
 				if(_mode == "sort"){
@@ -564,7 +564,7 @@ package com.takumus.ui.list
 		//データ数に変化が当たっとき！
 		private function changeDataSize():void
 		{
-			_contentsHeight = _dataListSize * (_cellHeight + _cellSpace) + _cellSpace;
+			_contentsHeight = _dataListSize * (_realCellHeight) + _cellSpace;
 			//スクロールバー更新
 			_scrollBar.setContentHeight(_contentsHeight);
 			
