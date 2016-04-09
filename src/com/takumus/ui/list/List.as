@@ -302,7 +302,7 @@ package com.takumus.ui.list
 				//----------------------------------------//
 				//指でつかんでソート中
 				//----------------------------------------//
-				_cellForSort._parent.y = mouseY - _realCellHeight * 0.5;
+				_cellForSort._parent.y = mouseY - _cellHeight * 0.5;
 				
 				var scrollSpeed:Number = _contentsHeight / _height * 2;
 				var scrollSpeedPer:Number = 0;
@@ -392,6 +392,7 @@ package com.takumus.ui.list
 				//ソートモードの場合
 				if(_mode == "sort"){
 					if(scY < _cellList[i]._yForSort){
+						_cellList[i]._parent.y += _cellSpace;
 						//下へずらす
 						_cellList[i]._setPosition("bottom", needAnimation);
 					}else{
