@@ -1,5 +1,6 @@
 package
 {
+	import com.takumus.ui.events.ListCellMouseEvent;
 	import com.takumus.ui.list.CellData;
 	import com.takumus.ui.list.List;
 	import com.takumus.ui.list.ListCell;
@@ -20,6 +21,12 @@ package
 			
 			//addChild to "body"
 			body.addChild(_label);
+			
+			//body clicked and select
+			this.body.addEventListener(ListCellMouseEvent.CLICK, function(e:ListCellMouseEvent):void
+			{
+				select();
+			});
 		}
 		
 		//override resize
