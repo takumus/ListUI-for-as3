@@ -1,6 +1,7 @@
 package com.takumus.ui.list
 {
 	import com.takumus.ui.events.ListCellMouseEvent;
+	
 	import flash.display.Sprite;
 
 	internal class _ListCell{
@@ -38,15 +39,14 @@ package com.takumus.ui.list
 		}
 		protected function dispose():void
 		{
-			
 		}
 		protected final function remove():void
 		{
 			_list._cell_remove(dataId, cellId);
 		}
-		protected final function select():void
+		protected final function select(args:Object = null):void
 		{
-			_list._cell_select(dataId);
+			_list._cell_select(dataId, args);
 		}
 		protected final function get cellHeight():Number
 		{
