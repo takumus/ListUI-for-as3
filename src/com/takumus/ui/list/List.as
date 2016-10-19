@@ -498,6 +498,7 @@ package com.takumus.ui.list
 			}
 			_freezeScrollSort = true;
 			start();
+			update(null);
 		}
 		private function stopSort():void
 		{
