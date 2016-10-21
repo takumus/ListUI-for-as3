@@ -43,10 +43,10 @@ package
 			//set data to List
 			_list.setData(data);
 			
-			//add select event
-			_list.addEventListener(ListEvent.SELECT, function(e:ListEvent):void
+			//add message event
+			_list.addEventListener(ListEvent.MESSAGE, function(e:ListEvent):void
 			{
-				_textField.text = e.cellData.data + " selected";
+				_textField.text = e.cellData.data + ":" + e.data;
 			});
 			
 			//resize list to stage
