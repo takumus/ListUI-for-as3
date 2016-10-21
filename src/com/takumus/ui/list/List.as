@@ -414,11 +414,11 @@ package com.takumus.ui.list
 		//----------------------------------------------------------//
 		//選択
 		//----------------------------------------------------------//
-		private function select(dataId:int, args:Object = null):void
+		private function messageFromCell(dataId:int, data:Object = null):void
 		{
-			var e:ListEvent = new ListEvent(ListEvent.SELECT);
+			var e:ListEvent = new ListEvent(ListEvent.MESSAGE);
 			e.cellData = _dataList[dataId];
-			e.args = args;
+			e.data = data;
 			dispatchEvent(e);
 		}
 		//----------------------------------------------------------//
@@ -584,9 +584,9 @@ package com.takumus.ui.list
 		{
 			remove(dataId, cellId);
 		}
-		internal function _cell_select(dataId:int, args:Object = null):void
+		internal function _cell_message(dataId:int, data:Object = null):void
 		{
-			select(dataId, args);
+			messageFromCell(dataId, data);
 		}
 	}
 }

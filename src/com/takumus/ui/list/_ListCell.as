@@ -44,9 +44,14 @@ package com.takumus.ui.list
 		{
 			_list._cell_remove(dataId, cellId);
 		}
+		[Deprecated(deprecatedReplacement="message")]
 		protected final function select(args:Object = null):void
 		{
-			_list._cell_select(dataId, args);
+			_list._cell_message(dataId, args);
+		}
+		protected final function message(data:Object):void
+		{
+			_list._cell_message(dataId, data);
 		}
 		protected final function get cellHeight():Number
 		{
