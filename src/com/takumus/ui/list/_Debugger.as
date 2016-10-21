@@ -30,19 +30,19 @@ package com.takumus.ui.list
 		private function initEvents():void
 		{
 			_list.addEventListener(ListEvent.REMOVE, function(e:ListEvent):void{
-				add("remove{\n" +
+				add("remove:{\n" +
 					"  data : " + e.cellData.data + "\n" +
 					"  id   : " + e.cellData.id + "\n" +
 					"}");
 			});
-			_list.addEventListener(ListEvent.SELECT, function(e:ListEvent):void{
-				add("select{\n" +
+			_list.addEventListener(ListEvent.MESSAGE, function(e:ListEvent):void{
+				add("message:{\n" +
 					"  data : " + e.cellData.data + "\n" +
 					"  id   : " + e.cellData.id + "\n" +
 					"}");
 			});
 			_list.addEventListener(ListEvent.UPDATE, function(e:ListEvent):void{
-				add("update{\n" +
+				add("update:{\n" +
 					"  data : " +
 					_list.getData()+"\n"+
 					"}");
