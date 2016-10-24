@@ -10,7 +10,7 @@ Simple and Fast listUI library for as3.
 
 #Demo  
 
-<http://takumus.com/list-ui-for-as3/>
+<http://takumus.com/labs/list-ui-for-as3/samples/demo/>
 
 #How to use
 
