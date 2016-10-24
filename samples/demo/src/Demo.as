@@ -32,24 +32,22 @@ package
 			
 			//add message event from cell
 			_list.addEventListener(ListEvent.MESSAGE, function(event:ListEvent):void{
-				_log.appendText("message : {id:"+event.cellData.id + ", message:\"" + event.message + "\"}\n");
-				_log.scrollV = _log.maxScrollV;
+				log("message : {id:"+event.cellData.id + ", message:\"" + event.message + "\"}\n");
 			});
 			//add update event
 			_list.addEventListener(ListEvent.UPDATE, function(event:ListEvent):void{
-				_log.appendText("updated : [");
+				log("updated : [");
 				var tmpData:Array = _list.getData();
 				for(var i:int = 0; i < tmpData.length; i ++){
 					var data:String = tmpData[i];
-					_log.appendText(data+",");
+					log(data+",");
 				}
-				_log.appendText("]\n");
-				_log.scrollV = _log.maxScrollV;
+				log("]\n");
 			});
 			//add remove event
 			_list.addEventListener(ListEvent.REMOVE, function(event:ListEvent):void
 			{
-				_log.appendText("removed : {id:"+event.cellData.id + ", data:" + event.cellData.data.toString() + "}\n");
+				log("removed : {id:"+event.cellData.id + ", data:" + event.cellData.data.toString() + "}\n");
 			});
 			
 			//debug log
@@ -71,7 +69,11 @@ package
 			
 			resize();
 		}
-		
+		private function log(text:String):void
+		{
+			_log.appendText(text);
+			_log.scrollV = _log.maxScrollV;
+		}
 		private function resize():void
 		{
 			_list.resize(stage.stageWidth, stage.stageHeight);
