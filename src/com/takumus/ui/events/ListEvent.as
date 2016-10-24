@@ -14,6 +14,7 @@ package com.takumus.ui.events {
 		public static const REMOVE:String = "com.takumus.ui.events.ListEvent.REMOVE";
 		public var cellData:CellData;
 		public var data:Object;
+		public var message:Object;
 		public function ListEvent(type : String, bubbles : Boolean = false, cancelable : Boolean = false) {
 			super(type, bubbles, cancelable);
 		}

@@ -419,6 +419,7 @@ package com.takumus.ui.list
 			var e:ListEvent = new ListEvent(ListEvent.MESSAGE);
 			e.cellData = _dataList[dataId];
 			e.data = data;
+			e.message = data;
 			dispatchEvent(e);
 		}
 		//----------------------------------------------------------//
